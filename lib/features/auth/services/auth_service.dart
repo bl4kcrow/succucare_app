@@ -18,7 +18,7 @@ abstract class AuthService {
 
   Future<void> signOut();
 
-  Stream<AuthenticationState>authStateChanges();
+  Stream<AuthenticationState> authStateChanges();
 
   Future<void> sendPasswordResetEmail(String email);
 

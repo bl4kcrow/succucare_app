@@ -13,14 +13,7 @@ class Auth extends _$Auth {
   Authentication build() {
     final appUser = ref.watch(authRepositoryProvider).currentUser();
 
-    return Authentication(
-      user: appUser,
-      authenticationState:
-          appUser.id != ''
-              ? AuthenticationState.authenticated
-              : AuthenticationState.unauthenticated,
-      token: '',
-    );
+    return Authentication(user: appUser, errorMessage: '');
   }
 
   Stream<AuthenticationState> authStateChanges() {
@@ -33,18 +26,12 @@ class Auth extends _$Auth {
     required String password,
   }) async {
     final authRepository = ref.watch(authRepositoryProvider);
-    final appUser = await authRepository.signInWithEmailAndPassword(
+    final userResult = await authRepository.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
 
-    state = state.copyWith(
-      user: appUser,
-      authenticationState:
-          appUser.id != ''
-              ? AuthenticationState.authenticated
-              : AuthenticationState.unauthenticated,
-    );
+    state = state.copyWith(user: userResult);
   }
 
   Future<void> signUpWithEmailAndPassword({
@@ -53,18 +40,13 @@ class Auth extends _$Auth {
     required String password,
   }) async {
     final authRepository = ref.watch(authRepositoryProvider);
-    final appUser = await authRepository.signUpWithEmailAndPassword(
+    final userResult = await authRepository.signUpWithEmailAndPassword(
       name: name,
       email: email,
       password: password,
     );
 
-    state = state.copyWith(
-      user: appUser,
-      authenticationState: appUser.id != ''
-          ? AuthenticationState.authenticated
-          : AuthenticationState.unauthenticated,
-    );
+    state = state.copyWith(user: userResult);
   }
 
   Future<void> signOut() async {
@@ -73,7 +55,7 @@ class Auth extends _$Auth {
 
     state = state.copyWith(
       user: AppUser(id: '', name: 'No name', email: 'No email'),
-      authenticationState: AuthenticationState.unauthenticated,
+      errorMessage: '',
     );
   }
 
@@ -83,7 +65,7 @@ class Auth extends _$Auth {
 
     state = state.copyWith(
       user: AppUser(id: '', name: 'No name', email: 'No email'),
-      authenticationState: AuthenticationState.unauthenticated,
+      errorMessage: '',
     );
   }
 }

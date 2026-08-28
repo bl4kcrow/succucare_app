@@ -9,6 +9,8 @@ class AppColors {
   static const englishLavender = Color(0xFFA68892);
   static const silverMetallic = Color(0xFFB9AEAE);
   static const mysticMaroon = Color(0xFFA74D77);
+  static const frenchRaspberry = Color(0xFFC72C41);
+  static const claret = Color(0xFF801336);
   static const white = Color(0xFFFEFEFE);
   static const smokyBlack = Color(0xFF121212);
 }

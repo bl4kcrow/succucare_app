@@ -17,11 +17,13 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  FirebaseAuth.instanceFor(app: app);
+  // FirebaseAuth.instanceFor(app: app);
 
   // To use the emulator for Firebase Auth
   // add usesCleartextTraffic="true" from android/app/src/debug/AndroidManifest.xml
   // await FirebaseAuth.instance.useAuthEmulator('10.0.2.2', 9099);
+  // To use a physical device for Firebase Auth
+  await FirebaseAuth.instance.useAuthEmulator('192.168.0.2', 9099);
 
   runApp(ProviderScope(child: const MainApp()));
 }

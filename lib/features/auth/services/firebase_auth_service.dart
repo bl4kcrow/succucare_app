@@ -60,19 +60,12 @@ class FirebaseAuthService implements AuthService {
         name: credential.user?.displayName ?? 'No name',
         email: credential.user?.email ?? 'No email',
       );
-    } on FirebaseAuthException catch (error) {
-      if (error.code == 'user-not-found') {
-        debugPrint('No user found for that email.');
-      } else if (error.code == 'wrong-password') {
-        debugPrint('Wrong password provided for that user.');
-      }
-      rethrow; // Re-throw the exception to handle it in the UI
     } catch (error) {
       debugPrint('Error signing in: $error');
       rethrow;
     }
 
-    return appUser; // Return a default user if sign-in fails
+    return appUser;
   }
 
   @override
@@ -94,13 +87,6 @@ class FirebaseAuthService implements AuthService {
           email: credential.user!.email!,
         );
       }
-    } on FirebaseAuthException catch (error) {
-      if (error.code == 'weak-password') {
-        debugPrint('The password provided is too weak.');
-      } else if (error.code == 'email-already-in-use') {
-        debugPrint('The account already exists for that email.');
-      }
-      rethrow;
     } catch (error) {
       debugPrint('Error signing up: $error');
       rethrow;

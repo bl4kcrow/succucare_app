@@ -19,10 +19,11 @@ class AppTheme {
         primary: AppColors.coolGrey,
         onPrimary: AppColors.smokyBlack,
         secondary: AppColors.rocketMetallic,
-        tertiary: AppColors.englishLavender,
+        tertiary: AppColors.mysticMaroon,
         surface: AppColors.white,
         surfaceTint: AppColors.culturedWhite,
-        error: AppColors.mysticMaroon,
+        error: AppColors.frenchRaspberry,
+        onError: AppColors.claret,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(

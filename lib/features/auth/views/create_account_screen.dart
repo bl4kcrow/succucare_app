@@ -39,7 +39,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
     }
     return null;
   }
-  
+
   @override
   void dispose() {
     nameController.dispose();
@@ -60,136 +60,150 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
           key: formKey,
           child: Padding(
             padding: const EdgeInsets.all(Insets.extraLarge),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'Create Account',
-                  textAlign: TextAlign.center,
-                  style: textTheme.headlineMedium,
-                ),
-                const SizedBox(height: Insets.extraLarge),
-                Text('Name'),
-                TextFormField(
-                  autocorrect: false,
-                  controller: nameController,
-                  decoration: const InputDecoration(hintText: 'Peter Parker'),
-                ),
-                const SizedBox(height: Insets.medium),
-                Text('Email'),
-                TextFormField(
-                  autocorrect: false,
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    hintText: 'example@email.com',
+            child: SingleChildScrollView(
+              physics: ClampingScrollPhysics(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Create Account',
+                    textAlign: TextAlign.center,
+                    style: textTheme.headlineMedium,
                   ),
-                  validator: _emailValidator,
-                ),
-                const SizedBox(height: Insets.medium),
-                Text('Password'),
-                TextFormField(
-                  controller: passwordController,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your password',
-                    suffixIcon: Icon(Icons.visibility_off),
+                  const SizedBox(height: Insets.extraLarge),
+                  Text('Name'),
+                  TextFormField(
+                    autocorrect: false,
+                    controller: nameController,
+                    decoration: const InputDecoration(hintText: 'Peter Parker'),
+                    onTapOutside:
+                        (event) =>
+                            FocusManager.instance.primaryFocus?.unfocus(),
                   ),
-                  obscureText: true,
-                  validator: _passwordValidator,
-                ),
-                const SizedBox(height: Insets.medium),
-                Text.rich(
-                  textAlign: TextAlign.center,
-                  TextSpan(
-                    text: 'Agree with ',
-                    children: [
-                      TextSpan(
-                        text: 'Terms & Conditions',
-                        style: textTheme.bodyMedium?.copyWith(
-                          color: AppColors.englishLavender,
-                          decoration: TextDecoration.underline,
-                          decorationColor: AppColors.englishLavender,
+                  const SizedBox(height: Insets.medium),
+                  Text('Email'),
+                  TextFormField(
+                    autocorrect: false,
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      hintText: 'example@email.com',
+                    ),
+                    validator: _emailValidator,
+                    onTapOutside:
+                        (event) =>
+                            FocusManager.instance.primaryFocus?.unfocus(),
+                  ),
+                  const SizedBox(height: Insets.medium),
+                  Text('Password'),
+                  TextFormField(
+                    controller: passwordController,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter your password',
+                      suffixIcon: Icon(Icons.visibility_off),
+                    ),
+                    obscureText: true,
+                    validator: _passwordValidator,
+                    onTapOutside:
+                        (event) =>
+                            FocusManager.instance.primaryFocus?.unfocus(),
+                  ),
+                  const SizedBox(height: Insets.medium),
+                  Text.rich(
+                    textAlign: TextAlign.center,
+                    TextSpan(
+                      text: 'Agree with ',
+                      children: [
+                        TextSpan(
+                          text: 'Terms & Conditions',
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: AppColors.englishLavender,
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColors.englishLavender,
+                          ),
+                          recognizer:
+                              TapGestureRecognizer()
+                                ..onTap = () {
+                                  // Open up Terms & Conditions page
+                                },
                         ),
-                        recognizer:
-                            TapGestureRecognizer()
-                              ..onTap = () {
-                                // Open up Terms & Conditions page
-                              },
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: Insets.extraLarge),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (formKey.currentState?.validate() ?? false) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
+                  const SizedBox(height: Insets.extraLarge),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (formKey.currentState?.validate() ?? false) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Processing Data')),
+                        );
 
-                      await authenticationProvider.signUpWithEmailAndPassword(
-                        name: nameController.text,
-                        email: emailController.text,
-                        password: passwordController.text,
-                      );
-                    }
-                  },
-                  child: const Text('Sign Up'),
-                ),
-                const SizedBox(height: Insets.extraLarge),
-                Text('Or sign up with', textAlign: TextAlign.center),
-                const SizedBox(height: Insets.large),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: const SvgIcon(path: 'assets/icons/google_logo.svg'),
-                      onPressed: () {
-                        // Handle Google sign-in
-                      },
-                    ),
-                    IconButton(
-                      icon: const SvgIcon(
-                        path: 'assets/icons/instagram_logo.svg',
-                      ),
-                      onPressed: () {
-                        // Handle Instagram sign-in
-                      },
-                    ),
-                    IconButton(
-                      icon: const SvgIcon(
-                        path: 'assets/icons/facebook_logo.svg',
-                      ),
-                      onPressed: () {
-                        // Handle Facebook sign-in
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(height: Insets.extraLarge),
-                Text.rich(
-                  textAlign: TextAlign.center,
-                  TextSpan(
-                    text: 'Already have an account? ',
+                        await authenticationProvider.signUpWithEmailAndPassword(
+                          name: nameController.text,
+                          email: emailController.text,
+                          password: passwordController.text,
+                        );
+                      }
+                    },
+                    child: const Text('Sign Up'),
+                  ),
+                  const SizedBox(height: Insets.extraLarge),
+                  Text('Or sign up with', textAlign: TextAlign.center),
+                  const SizedBox(height: Insets.large),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextSpan(
-                        text: 'Sign In',
-                        style: textTheme.bodyMedium?.copyWith(
-                          color: AppColors.englishLavender,
-                          decoration: TextDecoration.underline,
-                          decorationColor: AppColors.englishLavender,
+                      IconButton(
+                        icon: const SvgIcon(
+                          path: 'assets/icons/google_logo.svg',
                         ),
-                        recognizer:
-                            TapGestureRecognizer()
-                              ..onTap = () {
-                                // Navigate to Sign Up screen
-                              },
+                        onPressed: () {
+                          // Handle Google sign-in
+                        },
+                      ),
+                      IconButton(
+                        icon: const SvgIcon(
+                          path: 'assets/icons/instagram_logo.svg',
+                        ),
+                        onPressed: () {
+                          // Handle Instagram sign-in
+                        },
+                      ),
+                      IconButton(
+                        icon: const SvgIcon(
+                          path: 'assets/icons/facebook_logo.svg',
+                        ),
+                        onPressed: () {
+                          // Handle Facebook sign-in
+                        },
                       ),
                     ],
                   ),
-                ),
-              ],
+                  const SizedBox(height: Insets.extraLarge),
+                  Text.rich(
+                    textAlign: TextAlign.center,
+                    TextSpan(
+                      text: 'Already have an account? ',
+                      children: [
+                        TextSpan(
+                          text: 'Sign In',
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: AppColors.englishLavender,
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColors.englishLavender,
+                          ),
+                          recognizer:
+                              TapGestureRecognizer()
+                                ..onTap = () {
+                                  // Navigate to Sign Up screen
+                                },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
