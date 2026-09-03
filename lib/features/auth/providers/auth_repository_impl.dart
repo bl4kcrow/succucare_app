@@ -1,10 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../models/app_user.dart';
-import '../repositories/auth_repository.dart';
-import '../services/auth_service.dart';
-import '../services/firebase_auth_service.dart';
-import 'authentication_state.dart';
+import '../models/models.dart';
+import '../repositories/repositories.dart';
+import '../services/services.dart';
+import 'providers.dart';
 
 part 'auth_repository_impl.g.dart';
 

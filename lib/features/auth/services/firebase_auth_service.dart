@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../models/app_user.dart';
-import '../providers/authentication_state.dart';
-import 'auth_service.dart';
+import '../models/models.dart';
+import '../providers/providers.dart';
+import 'services.dart';
 
 class FirebaseAuthService implements AuthService {
   @override

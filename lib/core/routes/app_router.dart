@@ -1,13 +1,16 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:succucare_app/features/garden/views/alerts_view.dart';
+import 'package:succucare_app/features/garden/views/plant_scan_view.dart';
+import 'package:succucare_app/features/garden/screens/garden_screen.dart';
 
 import '../../features/auth/providers/auth.dart';
 import '../../features/auth/providers/authentication_state.dart';
-import '../../features/auth/views/create_account_screen.dart';
-import '../../features/auth/views/splash_screen.dart';
-import '../../features/auth/views/login_screen.dart';
-import '../../features/succus/views/home_screen.dart';
+import '../../features/auth/screens/create_account_screen.dart';
+import '../../features/auth/screens/splash_screen.dart';
+import '../../features/auth/screens/login_screen.dart';
+import '../../features/garden/views/garden_home_view.dart';
 import 'routes.dart';
 
 part 'app_router.g.dart';
@@ -24,7 +27,19 @@ GoRouter appRouter(Ref ref) {
 
   ref.onDispose(authenticationState.dispose);
 
+  final rootNavigatorKey = GlobalKey<NavigatorState>();
+  final shellNavigatorKeyHome = GlobalKey<NavigatorState>(
+    debugLabel: 'ShellNavKey Home',
+  );
+  final shellNavigatorKeyScan = GlobalKey<NavigatorState>(
+    debugLabel: 'ShellNavKey Plant Scan',
+  );
+  final shellNavigatorKeyAlerts = GlobalKey<NavigatorState>(
+    debugLabel: 'ShellNavKey Alerts',
+  );
+
   final router = GoRouter(
+    navigatorKey: rootNavigatorKey,
     initialLocation: Routes.splash.value,
     refreshListenable: authenticationState,
     redirect: (context, state) {
@@ -52,13 +67,6 @@ GoRouter appRouter(Ref ref) {
         },
       ),
       GoRoute(
-        name: Routes.home.name,
-        path: Routes.home.value,
-        builder: (context, state) {
-          return const HomeScreen();
-        },
-      ),
-      GoRoute(
         name: Routes.login.name,
         path: Routes.login.value,
         builder: (context, state) {
@@ -71,6 +79,49 @@ GoRouter appRouter(Ref ref) {
             builder: (context, state) {
               return const CreateAccountScreen();
             },
+          ),
+        ],
+      ),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return GardenScreen(navigationShell: navigationShell);
+        },
+        branches: [
+          StatefulShellBranch(
+            navigatorKey: shellNavigatorKeyHome,
+            routes: [
+              GoRoute(
+                name: Routes.home.name,
+                path: Routes.home.value,
+                builder: (context, state) {
+                  return const GardenHomeView();
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: shellNavigatorKeyScan,
+            routes: [
+              GoRoute(
+                name: Routes.scanPlant.name,
+                path: Routes.scanPlant.value,
+                builder: (context, state) {
+                  return const PlantScanView();
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: shellNavigatorKeyAlerts,
+            routes: [
+              GoRoute(
+                name: Routes.alerts.name,
+                path: Routes.alerts.value,
+                builder: (context, state) {
+                  return const AlertsView();
+                },
+              ),
+            ],
           ),
         ],
       ),

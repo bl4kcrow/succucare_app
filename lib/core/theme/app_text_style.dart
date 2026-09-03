@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTextStyle {
   AppTextStyle._();
@@ -18,19 +19,22 @@ class AppTextStyle {
     fontWeight: FontWeight.w400,
   );
 
-  static const TextStyle headlineLarge = TextStyle(
-    fontSize: 32.0,
-    fontWeight: FontWeight.bold,
+  static final TextStyle headlineLarge = GoogleFonts.plusJakartaSans(
+    fontSize: 28,
+    fontWeight: FontWeight.w700,
+    height: 36 / 28,
   );
 
-  static const TextStyle headlineMedium = TextStyle(
-    fontSize: 28.0,
+  static final TextStyle headlineMedium = GoogleFonts.plusJakartaSans(
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    height: 32 / 24,
+  );
+
+  static final TextStyle headlineSmall = GoogleFonts.plusJakartaSans(
+    fontSize: 20,
     fontWeight: FontWeight.w600,
-  );
-
-  static const TextStyle headlineSmall = TextStyle(
-    fontSize: 24.0,
-    fontWeight: FontWeight.w400,
+    height: 28 / 20,
   );
 
   static const TextStyle titleLarge = TextStyle(
@@ -49,8 +53,10 @@ class AppTextStyle {
   );
 
   static const TextStyle labelLarge = TextStyle(
-    fontSize: 14.0,
-    fontWeight: FontWeight.bold,
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    height: 20 / 14,
+    letterSpacing: 0.01,
   );
 
   static const TextStyle labelMedium = TextStyle(
@@ -59,8 +65,10 @@ class AppTextStyle {
   );
 
   static const TextStyle labelSmall = TextStyle(
-    fontSize: 11.0,
-    fontWeight: FontWeight.w400,
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    height: 16 / 12,
+    letterSpacing: 0.04,
   );
 
   static const TextStyle bodyLarge = TextStyle(
@@ -69,8 +77,9 @@ class AppTextStyle {
   );
 
   static const TextStyle bodyMedium = TextStyle(
-    fontSize: 14.0,
-    fontWeight: FontWeight.w600,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    height: 20 / 14,
   );
 
   static const TextStyle bodySmall = TextStyle(

@@ -1,0 +1,303 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Succulent AI - My Garden</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Manrope:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#8e9ebd",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#dce2f9",
+                        "on-primary-container": "#151b2c",
+                        "primary-fixed": "#dce2f9",
+                        "on-primary-fixed": "#151b2c",
+                        "primary-fixed-dim": "#bec6dc",
+                        "on-primary-fixed-variant": "#435069",
+                        "inverse-primary": "#bec6dc",
+
+                        "secondary": "#80716d",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#f1dfdb",
+                        "on-secondary-container": "#322b28",
+                        "secondary-fixed": "#f1dfdb",
+                        "on-secondary-fixed": "#322b28",
+                        "secondary-fixed-dim": "#d5c3bf",
+                        "on-secondary-fixed-variant": "#675955",
+
+                        "tertiary": "#a74d77",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#ffd9e4",
+                        "on-tertiary-container": "#3e0024",
+                        "tertiary-fixed": "#ffd9e4",
+                        "on-tertiary-fixed": "#3e0024",
+                        "tertiary-fixed-dim": "#ffb0ca",
+                        "on-tertiary-fixed-variant": "#89345e",
+
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#410002",
+
+                        "background": "#fbf8f8",
+                        "on-background": "#1c1b1b",
+                        "surface": "#fbf8f8",
+                        "on-surface": "#1c1b1b",
+                        "surface-variant": "#e3e2e6",
+                        "on-surface-variant": "#46464a",
+                        "outline": "#76767a",
+                        "outline-variant": "#c7c6ca",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f5f3f3",
+                        "surface-container": "#efeded",
+                        "surface-container-high": "#e9e7e8",
+                        "surface-container-highest": "#e3e2e2",
+                        "inverse-surface": "#313030",
+                        "inverse-on-surface": "#f3f0f0",
+                        "surface-tint": "#8e9ebd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap-lg": "24px",
+                        "card-padding": "16px",
+                        "stack-gap-md": "16px",
+                        "unit": "4px",
+                        "container-margin": "20px",
+                        "stack-gap-sm": "8px",
+                        "section-padding": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Manrope"],
+                        "label-sm": ["Manrope"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-lg": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "headline-xl-mobile": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+                        "label-sm-mobile": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-xl-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 20px rgba(26, 67, 44, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen pb-[100px] md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md text-primary dark:text-primary-fixed flex justify-between items-center w-full px-container-margin py-unit h-16 fixed top-0 left-0 right-0 z-40">
+<button aria-label="Back" class="text-on-surface-variant dark:text-outline hover:bg-secondary-container/50 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-lg text-headline-lg font-bold">Succulent AI</h1>
+<button aria-label="Search" class="text-on-surface-variant dark:text-outline hover:bg-secondary-container/50 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="pt-24 px-container-margin md:max-w-7xl md:mx-auto">
+<!-- Search & Filter Area (Desktop focus, subtle on mobile) -->
+<div class="mb-stack-gap-lg md:mb-section-padding">
+<div class="relative w-full max-w-md mx-auto md:mx-0">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-12 pr-4 py-3 rounded-[12px] border border-outline-variant bg-surface-container-low text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors font-body-md" placeholder="Search your garden..." type="text">
+</div>
+</div><div class="flex overflow-x-auto gap-2 pb-4 mb-stack-gap-md no-scrollbar">
+    <button class="flex-none px-4 py-1.5 rounded-lg bg-primary text-on-primary font-label-sm transition-colors">Todas</button>
+    <button class="flex-none px-4 py-1.5 rounded-lg bg-surface-container-high text-on-surface-variant font-label-sm hover:bg-secondary-container/50 transition-colors">Suculentas</button>
+    <button class="flex-none px-4 py-1.5 rounded-lg bg-surface-container-high text-on-surface-variant font-label-sm hover:bg-secondary-container/50 transition-colors">Cactus</button>
+    <button class="flex-none px-4 py-1.5 rounded-lg bg-surface-container-high text-on-surface-variant font-label-sm hover:bg-secondary-container/50 transition-colors">Interior</button>
+    <button class="flex-none px-4 py-1.5 rounded-lg bg-surface-container-high text-on-surface-variant font-label-sm hover:bg-secondary-container/50 transition-colors">Exterior</button>
+</div>
+<!-- Section Header -->
+<div class="flex justify-between items-end mb-stack-gap-md">
+<h2 class="font-headline-xl-mobile md:font-headline-xl text-on-surface">My Garden</h2>
+<span class="font-label-sm text-outline">4 Plants</span>
+</div>
+<!-- Bento Grid for Plants -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-stack-gap-md md:gap-stack-gap-lg">
+<!-- Plant Card 1 (Needs Water - High Priority) -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden soft-shadow border border-surface-variant group hover:shadow-lg transition-shadow relative cursor-pointer">
+<div class="h-48 w-full relative">
+<img class="w-full h-full object-cover" data-alt="A close-up, high-resolution macro shot of a thirsty Echeveria succulent in a modern minimalist ceramic pot. The leaves are slightly wrinkled, indicating it needs water. The lighting is soft, natural daylight pouring in from a nearby window, creating a serene, modern organic aesthetic with bright white and soft sage green tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDI22nCnBKjh3umnQpq8l4i5jGIziuZ71KqzqUU56PSXjEjPklg8paxPB43BtW3U-Kg674Pt5IRhBXk465oVGtvg9rP1Pu-ymwnBR0UyibGTogkWFK7JRU8T8X_jVxOQgYqGeI44pamGFi2Buys8FkMJXhlUN62ds1V6lNzfQnSKcZS1eJj5rGK4YUFDg2mzBoK8JJ7yAH8fzvUHskgIDAjWoeDrx9kOE_mzUGRpNS6ysBWcszwJIdw">
+<!-- Status Badge -->
+<div class="absolute top-3 right-3 bg-error-container text-on-error-container px-3 py-1 rounded-full font-label-sm flex items-center gap-1 shadow-sm glass-effect">
+<span class="material-symbols-outlined text-[16px]" data-icon="water_drop" data-weight="fill" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+                        Needs Water
+                    </div>
+</div>
+<div class="p-card-padding">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-md text-on-surface mb-1 group-hover:text-primary transition-colors">Luna</h3>
+<p class="font-label-sm text-outline-variant italic">Echeveria Elegans</p>
+</div>
+<button class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary hover:bg-secondary-container transition-colors">
+<span class="material-symbols-outlined" data-icon="local_drink">local_drink</span>
+</button>
+</div>
+<!-- Progress Indicator -->
+<div class="mt-4">
+<div class="flex justify-between font-label-sm text-outline mb-1">
+<span class="">Moisture</span>
+<span class="">Low</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-error w-1/4 rounded-full"></div>
+</div>
+</div>
+</div>
+</article>
+<!-- Plant Card 2 (Healthy) -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden soft-shadow border border-surface-variant group hover:shadow-lg transition-shadow relative cursor-pointer">
+<div class="h-48 w-full relative">
+<img class="w-full h-full object-cover" data-alt="A vibrant, perfectly healthy Jade Plant (Crassula ovata) in a matte white geometric planter. The plump, glossy green leaves reflect soft, warm morning sunlight. The setting is a clean, modern shelf against an off-white wall, embodying a fresh, calming, and minimalist botanical aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3HC47NTBjlaiCumieOHHK8tMn-lj_V5q5Gyzp9xKpHrGpxgD_8HZtGbal74f8vJvwkQ9gE_WJFPkD5xxmgKaVTshfpPLDEaeaTbrfg0pQihH3iKaSNXMPKBW2uxLEvGCmlWoL7-KJocWVq3ZDePvCSii2RpQhUMtbgcuZPTtUa53rRCWnulOcQmZ5asKwvIW9l-8HedbI4dE06v3N5alr4pOgxsNYtyQj2eG7Et-EG0htpgtS8bLd">
+<!-- Status Badge -->
+<div class="absolute top-3 right-3 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-sm flex items-center gap-1 shadow-sm glass-effect">
+<span class="material-symbols-outlined text-[16px]" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Thriving
+                    </div>
+</div>
+<div class="p-card-padding">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-md text-on-surface mb-1 group-hover:text-primary transition-colors">Jade</h3>
+<p class="font-label-sm text-outline-variant italic">Crassula Ovata</p>
+</div>
+</div>
+<!-- Progress Indicator -->
+<div class="mt-4">
+<div class="flex justify-between font-label-sm text-outline mb-1">
+<span class="">Moisture</span>
+<span class="">Optimal</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-3/4 rounded-full"></div>
+</div>
+</div>
+</div>
+</article>
+<!-- Plant Card 3 (Needs Light) -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden soft-shadow border border-surface-variant group hover:shadow-lg transition-shadow relative cursor-pointer">
+<div class="h-48 w-full relative">
+<img class="w-full h-full object-cover" data-alt="A small Haworthia fasciata (Zebra Plant) in a light grey concrete pot, sitting in a slightly dim, softly lit room. The distinctive white stripes on its dark green leaves stand out. The lighting suggests a shady corner of a modern, uncluttered living space, indicating it might need more light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhNg2fsiIccN1FIc0ErzPTVGBk_mfl1aHpHzFfqS-JvluLZjBlSAtSAHjJcl3UHKaTTZodRHO6JmZQXFYoy1luZmu-KD7ieRLGslNRwEG3BZdVc4X5q0p1ARFOLNfbvoTxCFONaf2yM4Fls51WVRgnpzq6tw7Ftf8oFNx13crOavWBLsVevxwwIukL3c8l3bYde8lcDBqsZr7XHLbdk1MXJaJI73U-98rqMIGaneY-CScXgUoXIZ2s">
+<!-- Status Badge -->
+<div class="absolute top-3 right-3 bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full font-label-sm flex items-center gap-1 shadow-sm glass-effect">
+<span class="material-symbols-outlined text-[16px]" data-icon="wb_sunny">wb_sunny</span>
+                        Needs Light
+                    </div>
+</div>
+<div class="p-card-padding">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-md text-on-surface mb-1 group-hover:text-primary transition-colors">Zebra</h3>
+<p class="font-label-sm text-outline-variant italic">Haworthia Fasciata</p>
+</div>
+</div>
+<!-- Progress Indicator -->
+<div class="mt-4">
+<div class="flex justify-between font-label-sm text-outline mb-1">
+<span class="">Light Exposure</span>
+<span class="">Low</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-1/3 rounded-full"></div>
+</div>
+</div>
+</div>
+</article>
+<!-- Plant Card 4 (Healthy) -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden soft-shadow border border-surface-variant group hover:shadow-lg transition-shadow relative cursor-pointer">
+<div class="h-48 w-full relative">
+<img class="w-full h-full object-cover" data-alt="A lush String of Pearls (Senecio rowleyanus) trailing gracefully from a hanging macrame planter. The round, bead-like leaves are plump and bright green. The background is a blurred, airy, light-filled room with minimalist decor, conveying a sense of calm and healthy growth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6KMNn4CdZgiIqZTBxNNfseIxsYO6yV4ATRb0z4X3KRJ_g9Gg9RZQjEbzEEMNQZeqw4xLFi26Y4pKryMIAxLCWZn8tALjsMPZEBudJk-6vqjod0utyFb7u7zk0s_7zYolAHIc9ASFcEbQIQ9knALgVj5CdTIbi_RhN_DoH_eWgLjJGMafEEdUTu1sqLnwL69hr_5WnOl7if9BcFAfeqepqmd1GWfrODTtPK_-k07ZbHK_lJutUeieo">
+<!-- Status Badge -->
+<div class="absolute top-3 right-3 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-sm flex items-center gap-1 shadow-sm glass-effect">
+<span class="material-symbols-outlined text-[16px]" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Thriving
+                    </div>
+</div>
+<div class="p-card-padding">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-md text-on-surface mb-1 group-hover:text-primary transition-colors">Pearls</h3>
+<p class="font-label-sm text-outline-variant italic">Senecio Rowleyanus</p>
+</div>
+</div>
+<!-- Progress Indicator -->
+<div class="mt-4">
+<div class="flex justify-between font-label-sm text-outline mb-1">
+<span class="">Moisture</span>
+<span class="">Optimal</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-2/3 rounded-full"></div>
+</div>
+</div>
+</div>
+</article>
+</div>
+</main>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed bottom-24 md:bottom-8 right-6 w-14 h-14 bg-primary text-on-primary rounded-[16px] shadow-lg flex justify-center items-center hover:bg-surface-tint hover:scale-105 transition-all duration-200 z-50">
+<span class="material-symbols-outlined text-[28px]" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="md:hidden bg-surface-container-low dark:bg-surface-container-lowest shadow-[0_-4px_20px_rgba(26,67,44,0.05)] docked full-width bottom-0 rounded-t-xl fixed left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3">
+<!-- Active: Garden -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-primary-fixed rounded-full px-5 py-1.5 hover:text-primary dark:hover:text-primary-fixed scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="potted_plant" data-weight="fill" style="font-variation-settings: 'FILL' 1;">potted_plant</span>
+<span class="font-label-sm-mobile text-label-sm-mobile">Garden</span>
+</a>
+<!-- Inactive: Scan -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1.5 hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="center_focus_strong">center_focus_strong</span>
+<span class="font-label-sm-mobile text-label-sm-mobile">Scan</span>
+</a>
+<!-- Inactive: Care -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1.5 hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="spa">spa</span>
+<span class="font-label-sm-mobile text-label-sm-mobile">Care</span>
+</a>
+<!-- Inactive: Alerts -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1.5 hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="notifications">notifications</span>
+<span class="font-label-sm-mobile text-label-sm-mobile">Alerts</span>
+</a>
+</nav>
+
+
+</body></html>

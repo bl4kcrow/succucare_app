@@ -13,7 +13,7 @@ class AppTheme {
       useMaterial3: true,
       brightness: Brightness.light,
       canvasColor: AppColors.white.withValues(alpha: 0.7),
-      fontFamily: GoogleFonts.inter().fontFamily,
+      fontFamily: GoogleFonts.manrope().fontFamily,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.coolGrey,
         primary: AppColors.coolGrey,

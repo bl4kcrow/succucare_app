@@ -1,23 +1,22 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:succucare_app/core/utils/custom_snack_bar_content.dart';
 
-import '../../../core/routes/routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/insets.dart';
 import '../../../core/utils/svg_icon.dart';
-import '../providers/auth.dart';
+import '../providers/providers.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+class CreateAccountScreen extends ConsumerStatefulWidget {
+  const CreateAccountScreen({super.key});
 
   @override
-  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<CreateAccountScreen> createState() =>
+      _CreateAccountScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -43,6 +42,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   void dispose() {
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -67,11 +67,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Sign In',
+                    'Create Account',
                     textAlign: TextAlign.center,
                     style: textTheme.headlineMedium,
                   ),
                   const SizedBox(height: Insets.extraLarge),
+                  Text('Name'),
+                  TextFormField(
+                    autocorrect: false,
+                    controller: nameController,
+                    decoration: const InputDecoration(hintText: 'Peter Parker'),
+                    onTapOutside:
+                        (event) =>
+                            FocusManager.instance.primaryFocus?.unfocus(),
+                  ),
+                  const SizedBox(height: Insets.medium),
                   Text('Email'),
                   TextFormField(
                     autocorrect: false,
@@ -99,47 +109,47 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         (event) =>
                             FocusManager.instance.primaryFocus?.unfocus(),
                   ),
-                  Text(
-                    'Forgot Password?',
-                    textAlign: TextAlign.end,
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: AppColors.englishLavender,
-                      decoration: TextDecoration.underline,
-                      decorationColor: AppColors.englishLavender,
+                  const SizedBox(height: Insets.medium),
+                  Text.rich(
+                    textAlign: TextAlign.center,
+                    TextSpan(
+                      text: 'Agree with ',
+                      children: [
+                        TextSpan(
+                          text: 'Terms & Conditions',
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: AppColors.englishLavender,
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColors.englishLavender,
+                          ),
+                          recognizer:
+                              TapGestureRecognizer()
+                                ..onTap = () {
+                                  // Open up Terms & Conditions page
+                                },
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: Insets.extraLarge),
                   ElevatedButton(
                     onPressed: () async {
                       if (formKey.currentState?.validate() ?? false) {
-                        try {
-                          await authenticationProvider
-                              .signInWithEmailAndPassword(
-                                email: emailController.text,
-                                password: passwordController.text,
-                              );
-                        } catch (error) {
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: CustomSnackBarContent(
-                                  message: error.toString(),
-                                ),
-                                behavior: SnackBarBehavior.floating,
-                                backgroundColor: Colors.transparent,
-                                elevation: 0,
-                                showCloseIcon: true,
-                                closeIconColor: AppColors.frenchRaspberry,
-                              ),
-                            );
-                          }
-                        }
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Processing Data')),
+                        );
+
+                        await authenticationProvider.signUpWithEmailAndPassword(
+                          name: nameController.text,
+                          email: emailController.text,
+                          password: passwordController.text,
+                        );
                       }
                     },
-                    child: const Text('Sign In'),
+                    child: const Text('Sign Up'),
                   ),
                   const SizedBox(height: Insets.extraLarge),
-                  Text('Or sign in with', textAlign: TextAlign.center),
+                  Text('Or sign up with', textAlign: TextAlign.center),
                   const SizedBox(height: Insets.large),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -174,10 +184,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   Text.rich(
                     textAlign: TextAlign.center,
                     TextSpan(
-                      text: 'Don\'t have an account? ',
+                      text: 'Already have an account? ',
                       children: [
                         TextSpan(
-                          text: 'Sign Up',
+                          text: 'Sign In',
                           style: textTheme.bodyMedium?.copyWith(
                             color: AppColors.englishLavender,
                             decoration: TextDecoration.underline,
@@ -186,7 +196,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           recognizer:
                               TapGestureRecognizer()
                                 ..onTap = () {
-                                  context.pushNamed(Routes.createAccount.name);
+                                  // Navigate to Sign Up screen
                                 },
                         ),
                       ],

@@ -26,16 +26,21 @@ $AppUserCopyWith<AppUser> get copyWith => _$AppUserCopyWithImpl<AppUser>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppUser&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email));
+  final _this = this as AppUser;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppUser&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.email, _this.email) || other.email == _this.email));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,email);
+int get hashCode {
+  final _this = this as AppUser;
+  return Object.hash(runtimeType,_this.id,_this.name,_this.email);
+}
 
 @override
 String toString() {
-  return 'AppUser(id: $id, name: $name, email: $email)';
+  final _this = this as AppUser;
+  return 'AppUser(id: ${_this.id}, name: ${_this.name}, email: ${_this.email})';
 }
 
 
@@ -226,16 +231,18 @@ _$AppUserCopyWith<_AppUser> get copyWith => __$AppUserCopyWithImpl<_AppUser>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppUser&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppUser&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,email);
+int get hashCode {
+    return Object.hash(runtimeType,id,name,email);
+}
 
 @override
 String toString() {
-  return 'AppUser(id: $id, name: $name, email: $email)';
+    return 'AppUser(id: $id, name: $name, email: $email)';
 }
 
 

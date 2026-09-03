@@ -26,16 +26,21 @@ $AuthenticationCopyWith<Authentication> get copyWith => _$AuthenticationCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Authentication&&(identical(other.user, user) || other.user == user)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  final _this = this as Authentication;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Authentication&&(identical(other.user, _this.user) || other.user == _this.user)&&(identical(other.errorMessage, _this.errorMessage) || other.errorMessage == _this.errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,user,errorMessage);
+int get hashCode {
+  final _this = this as Authentication;
+  return Object.hash(runtimeType,_this.user,_this.errorMessage);
+}
 
 @override
 String toString() {
-  return 'Authentication(user: $user, errorMessage: $errorMessage)';
+  final _this = this as Authentication;
+  return 'Authentication(user: ${_this.user}, errorMessage: ${_this.errorMessage})';
 }
 
 
@@ -233,16 +238,18 @@ _$AuthenticationCopyWith<_Authentication> get copyWith => __$AuthenticationCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Authentication&&(identical(other.user, user) || other.user == user)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Authentication&&(identical(other.user, user) || other.user == user)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,user,errorMessage);
+int get hashCode {
+    return Object.hash(runtimeType,user,errorMessage);
+}
 
 @override
 String toString() {
-  return 'Authentication(user: $user, errorMessage: $errorMessage)';
+    return 'Authentication(user: $user, errorMessage: $errorMessage)';
 }
 
 

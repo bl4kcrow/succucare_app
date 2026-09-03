@@ -1,5 +1,5 @@
-import '../models/app_user.dart';
-import '../providers/authentication_state.dart';
+import '../models/models.dart';
+import '../providers/providers.dart';
 
 abstract class AuthRepository {
   AppUser currentUser();
