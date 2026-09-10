@@ -1,16 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/models.dart';
-
-extension PlantCategoryFilterLabel on PlantCategoryFilter {
-  String get label => switch (this) {
-    PlantCategoryFilter.all => 'Todas',
-    PlantCategoryFilter.succulents => 'Suculentas',
-    PlantCategoryFilter.cactus => 'Cactus',
-    PlantCategoryFilter.indoor => 'Interior',
-    PlantCategoryFilter.outdoor => 'Exterior',
-  };
-}
+import 'package:succucare_app/features/garden/models/models.dart';
 
 class CategoryFilterBar extends StatelessWidget {
   const CategoryFilterBar({
@@ -19,8 +9,8 @@ class CategoryFilterBar extends StatelessWidget {
     required this.onSelected,
   });
 
-  final PlantCategoryFilter selected;
-  final ValueChanged<PlantCategoryFilter> onSelected;
+  final Category selected;
+  final ValueChanged<Category> onSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +18,10 @@ class CategoryFilterBar extends StatelessWidget {
       height: 36,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: PlantCategoryFilter.values.length,
+        itemCount: Category.values.length,
         separatorBuilder: (_, _) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
-          final filter = PlantCategoryFilter.values[index];
+          final filter = Category.values[index];
           return _CategoryChip(
             label: filter.label,
             isSelected: filter == selected,

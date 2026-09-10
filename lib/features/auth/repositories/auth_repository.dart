@@ -1,5 +1,5 @@
-import '../models/models.dart';
-import '../providers/providers.dart';
+import 'package:succucare_app/features/auth/models/models.dart';
+import 'package:succucare_app/features/auth/providers/providers.dart';
 
 abstract class AuthRepository {
   AppUser currentUser();
@@ -17,7 +17,7 @@ abstract class AuthRepository {
 
   Future<void> signOut();
 
-   Stream<AuthenticationState>authStateChanges();
+  Stream<AuthenticationState> authStateChanges();
 
   Future<void> sendPasswordResetEmail(String email);
 

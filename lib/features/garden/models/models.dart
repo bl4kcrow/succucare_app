@@ -1,2 +1,2 @@
-export 'home_state.dart';
+export 'firestore_plant.dart';
 export 'plant.dart';

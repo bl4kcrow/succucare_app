@@ -16,7 +16,7 @@ class GardenHeader extends StatelessWidget {
       children: [
         Text(
           'My Garden',
-          style: textTheme.headlineLarge?.copyWith(
+          style: textTheme.headlineMedium?.copyWith(
             color: colorScheme.onSurface,
           ),
         ),

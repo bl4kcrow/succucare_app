@@ -20,8 +20,8 @@ extension GardenDestinationLabel on GardenDestination {
   };
 }
 
-class GardenScreen extends StatelessWidget {
-  const GardenScreen({super.key, required this.navigationShell});
+class MyGardenScreen extends StatelessWidget {
+  const MyGardenScreen({super.key, required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
@@ -41,15 +41,14 @@ class GardenScreen extends StatelessWidget {
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: (indexSelected) => _onTabTapped(indexSelected),
-        destinations:
-            GardenDestination.values
-                .map(
-                  (destination) => NavigationDestination(
-                    icon: Icon(destination.icon),
-                    label: destination.label,
-                  ),
-                )
-                .toList(),
+        destinations: GardenDestination.values
+            .map(
+              (GardenDestination destination) => NavigationDestination(
+                icon: Icon(destination.icon),
+                label: destination.label,
+              ),
+            )
+            .toList(),
       ),
     );
   }

@@ -14,7 +14,7 @@ void main() {
 
     await tester.pumpWidget(
       const ProviderScope(
-        child: MaterialApp(home: GardenHomeView()),
+        child: MaterialApp(home: MyGardenHomeView()),
       ),
     );
     await tester.pump();
@@ -45,7 +45,7 @@ void main() {
 
     await tester.pumpWidget(
       const ProviderScope(
-        child: MaterialApp(home: GardenHomeView()),
+        child: MaterialApp(home: MyGardenHomeView()),
       ),
     );
     await tester.pump();
@@ -66,7 +66,7 @@ void main() {
 
     await tester.pumpWidget(
       const ProviderScope(
-        child: MaterialApp(home: GardenHomeView()),
+        child: MaterialApp(home: MyGardenHomeView()),
       ),
     );
     await tester.pump();

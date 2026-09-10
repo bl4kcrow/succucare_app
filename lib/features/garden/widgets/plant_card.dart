@@ -1,6 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../models/models.dart';
+import 'package:succucare_app/features/garden/models/models.dart';
 import 'widgets.dart';
 
 class PlantCard extends StatelessWidget {
@@ -47,16 +48,13 @@ class PlantCard extends StatelessWidget {
                   SizedBox(
                     height: 192,
                     width: double.infinity,
-                    child: Image.network(
-                      plant.imageUrl,
+                    child: CachedNetworkImage(
+                      imageUrl: plant.primaryPhotoUrl,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
+                      errorWidget: (context, url, error) {
                         return _PlantImagePlaceholder();
                       },
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
+                      placeholder: (context, url) {
                         return _PlantImagePlaceholder(isLoading: true);
                       },
                     ),
@@ -81,8 +79,8 @@ class PlantCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                plant.name,
-                                style: textTheme.headlineMedium?.copyWith(
+                                plant.commonName,
+                                style: textTheme.headlineSmall?.copyWith(
                                   color: colorScheme.onSurface,
                                 ),
                               ),
@@ -97,15 +95,12 @@ class PlantCard extends StatelessWidget {
                             ],
                           ),
                         ),
-                        if (plant.healthStatus == PlantHealthStatus.needsWater)
+                        if (plant.needsWater == true)
                           _WaterButton(onPressed: onWaterPressed),
                       ],
                     ),
                     const SizedBox(height: 16),
-                    CareProgressBar(
-                      metric: plant.careMetric,
-                      level: plant.careLevel,
-                    ),
+                    MoistureProgressBar(moisture: plant.moisture),
                   ],
                 ),
               ),

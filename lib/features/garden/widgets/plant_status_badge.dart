@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../models/models.dart';
-
-extension PlantHealthStatusLabel on PlantHealthStatus {
-  String get label => switch (this) {
-    PlantHealthStatus.needsWater => 'Needs Water',
-    PlantHealthStatus.thriving => 'Thriving',
-    PlantHealthStatus.needsLight => 'Needs Light',
-  };
-}
+import 'package:succucare_app/features/garden/models/models.dart';
 
 class PlantStatusBadge extends StatelessWidget {
   const PlantStatusBadge({super.key, required this.status});
 
-  final PlantHealthStatus status;
+  final HealthStatus status;
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +13,22 @@ class PlantStatusBadge extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     final (background, foreground, icon) = switch (status) {
-      PlantHealthStatus.needsWater => (
+      HealthStatus.sick => (
         colorScheme.errorContainer,
         colorScheme.onErrorContainer,
         Icons.water_drop,
       ),
-      PlantHealthStatus.thriving => (
+      HealthStatus.recovering => (
         colorScheme.secondaryContainer,
         colorScheme.onSecondaryContainer,
         Icons.check_circle,
       ),
-      PlantHealthStatus.needsLight => (
+      HealthStatus.dormant => (
+        colorScheme.tertiaryContainer,
+        colorScheme.onTertiaryContainer,
+        Icons.night_shelter,
+      ),
+      HealthStatus.healthy => (
         colorScheme.tertiaryContainer,
         colorScheme.onTertiaryContainer,
         Icons.wb_sunny,

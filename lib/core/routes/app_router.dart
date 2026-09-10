@@ -1,16 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:succucare_app/features/garden/views/alerts_view.dart';
-import 'package:succucare_app/features/garden/views/plant_scan_view.dart';
-import 'package:succucare_app/features/garden/screens/garden_screen.dart';
 
-import '../../features/auth/providers/auth.dart';
-import '../../features/auth/providers/authentication_state.dart';
-import '../../features/auth/screens/create_account_screen.dart';
-import '../../features/auth/screens/splash_screen.dart';
-import '../../features/auth/screens/login_screen.dart';
-import '../../features/garden/views/garden_home_view.dart';
+import 'package:succucare_app/features/garden/screens/screens.dart';
+import 'package:succucare_app/features/auth/providers/providers.dart';
+import 'package:succucare_app/features/auth/screens/screens.dart';
+import 'package:succucare_app/features/garden/views/views.dart';
 import 'routes.dart';
 
 part 'app_router.g.dart';
@@ -84,7 +79,7 @@ GoRouter appRouter(Ref ref) {
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
-          return GardenScreen(navigationShell: navigationShell);
+          return MyGardenScreen(navigationShell: navigationShell);
         },
         branches: [
           StatefulShellBranch(
@@ -94,7 +89,7 @@ GoRouter appRouter(Ref ref) {
                 name: Routes.home.name,
                 path: Routes.home.value,
                 builder: (context, state) {
-                  return const GardenHomeView();
+                  return const MyGardenHomeView();
                 },
               ),
             ],
@@ -124,6 +119,13 @@ GoRouter appRouter(Ref ref) {
             ],
           ),
         ],
+      ),
+      GoRoute(
+        name: Routes.addPlant.name,
+        path: Routes.addPlant.value,
+        builder: (context, state) {
+          return const AddPlantScreen();
+        },
       ),
     ],
   );
