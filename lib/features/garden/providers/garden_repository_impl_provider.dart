@@ -16,13 +16,13 @@ class GardenRespositoryImpl implements GardenRepository {
   final PlantsDatasource plantsDatasource;
 
   @override
-  Future<List<Plant>> loadInitialplants() {
+  Future<PlantPage> loadInitialPlants() {
     return plantsDatasource.loadInitialPlants();
   }
 
   @override
-  Future<List<Plant>> loadNextplants() {
-    return plantsDatasource.loadNextPlants();
+  Future<PlantPage> loadNextPlants(dynamic nextCursor) {
+    return plantsDatasource.loadNextPlants(nextCursor);
   }
 
   @override

@@ -7,21 +7,41 @@ part 'my_garden_provider.g.dart';
 
 @riverpod
 class MyGardenNotifier extends _$MyGardenNotifier {
+  bool _isLoadingMore = false;
+  bool _hasMore = true;
+  dynamic _nextCursor;
+
+  bool get isLoadingMore => _isLoadingMore;
+
   @override
   Future<List<Plant>> build() async {
-    final initialPlants = await ref
+    final page = await ref
         .read(gardenRepositoryImplProvider)
-        .loadInitialplants();
-    return initialPlants;
+        .loadInitialPlants();
+    _nextCursor = page.nextCursor;
+    return page.plants;
   }
 
   Future<void> loadNextPlants() async {
-    final currentPlants = state.requireValue;
+    if (_isLoadingMore || !_hasMore || !state.hasValue) return;
 
-    final nextPlants = await ref
-        .read(gardenRepositoryImplProvider)
-        .loadInitialplants();
+    _isLoadingMore = true;
 
-    state = AsyncData([...currentPlants, ...nextPlants]);
+    try {
+      final page = await ref
+          .read(gardenRepositoryImplProvider)
+          .loadNextPlants(_nextCursor);
+
+      if (page.plants.isNotEmpty) {
+        _nextCursor = page.nextCursor;
+        state = AsyncData([...state.requireValue, ...page.plants]);
+      }
+
+      if (_nextCursor == null) {
+        _hasMore = false;
+      }
+    } finally {
+      _isLoadingMore = false;
+    }
   }
 }

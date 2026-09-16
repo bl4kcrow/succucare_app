@@ -16,9 +16,28 @@ class MyGardenHomeView extends ConsumerStatefulWidget {
 
 class _MyGardenHomeViewState extends ConsumerState<MyGardenHomeView> {
   final FocusNode _searchFocusNode = FocusNode();
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange &&
+        _scrollController.position.extentAfter < 300) {
+      ref.read(myGardenProvider.notifier).loadNextPlants();
+    }
+  }
 
   @override
   void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
     _searchFocusNode.dispose();
     super.dispose();
   }
@@ -36,6 +55,7 @@ class _MyGardenHomeViewState extends ConsumerState<MyGardenHomeView> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final myGarden = ref.watch(myGardenProvider);
+    final myGardenNotifier = ref.read(myGardenProvider.notifier);
 
     return Scaffold(
       body: SafeArea(
@@ -62,8 +82,27 @@ class _MyGardenHomeViewState extends ConsumerState<MyGardenHomeView> {
                 else
                   Expanded(
                     child: ListView.builder(
-                      itemCount: myGarden.length,
+                      controller: _scrollController,
+                      itemCount:
+                          myGarden.length +
+                          (myGardenNotifier.isLoadingMore ? 1 : 0),
                       itemBuilder: (context, index) {
+                        if (index >= myGarden.length) {
+                          return const Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: Insets.small,
+                            ),
+                            child: Center(
+                              child: SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
                         final plant = myGarden[index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: Insets.medium),
