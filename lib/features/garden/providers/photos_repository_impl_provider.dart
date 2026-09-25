@@ -19,4 +19,9 @@ class PhotosRepositoryImpl implements PhotosRepository {
   Future<String> uploadPlantPhoto(String plantId, File imageFile) {
     return plantPhotoDatasource.uploadPlantPhoto(plantId, imageFile);
   }
+
+  @override
+  Future<void> deletePlantPhoto(String photoUrl) {
+    return plantPhotoDatasource.deletePlantPhoto(photoUrl);
+  }
 }

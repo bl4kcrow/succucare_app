@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -15,11 +16,13 @@ class PhotoUploadGrid extends StatelessWidget {
     required this.selectedImages,
     required this.onImageAdded,
     required this.onImageRemoved,
+    this.existingPhotoUrl,
   });
 
   final List<File> selectedImages;
   final ValueChanged<File> onImageAdded;
   final ValueChanged<int> onImageRemoved;
+  final String? existingPhotoUrl;
 
   Future<void> _pickImage(BuildContext context) async {
     final source = await _showImageSourceSheet(context);
@@ -42,12 +45,17 @@ class PhotoUploadGrid extends StatelessWidget {
         const _PhotoGridHeader(),
         const SizedBox(height: Insets.small),
         SizedBox(
-          height: screenSize.height / 4 ,
+          height: screenSize.height / 4,
           width: double.infinity,
           child: selectedImages.isNotEmpty
               ? _MainPhotoPreview(
                   image: selectedImages.first,
                   onRemove: () => onImageRemoved(0),
+                )
+              : (existingPhotoUrl != null && existingPhotoUrl!.isNotEmpty)
+              ? _ExistingPhotoPreview(
+                  photoUrl: existingPhotoUrl!,
+                  onReplace: () => _pickImage(context),
                 )
               : _MainPhotoPlaceholder(onTap: () => _pickImage(context)),
         ),
@@ -129,6 +137,71 @@ class _MainPhotoPreview extends StatelessWidget {
           const Positioned(top: 8, left: 8, child: _MainBadge()),
           Positioned(top: 8, right: 8, child: _RemoveButton(onTap: onRemove)),
         ],
+      ),
+    );
+  }
+}
+
+class _ExistingPhotoPreview extends StatelessWidget {
+  const _ExistingPhotoPreview({
+    required this.photoUrl,
+    required this.onReplace,
+  });
+
+  final String photoUrl;
+  final VoidCallback onReplace;
+
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 4 / 3,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(AppRadius.small),
+            child: CachedNetworkImage(
+              imageUrl: photoUrl,
+              fit: BoxFit.cover,
+              placeholder: (context, url) {
+                return Container(color: const Color(0xFFF8F9FB));
+              },
+              errorWidget: (context, url, error) {
+                return Container(
+                  color: const Color(0xFFF8F9FB),
+                  child: const Icon(
+                    Icons.broken_image_outlined,
+                    color: AppColors.coolGrey,
+                  ),
+                );
+              },
+            ),
+          ),
+          const Positioned(top: 8, left: 8, child: _MainBadge()),
+          Positioned(top: 8, right: 8, child: _ReplaceButton(onTap: onReplace)),
+        ],
+      ),
+    );
+  }
+}
+
+class _ReplaceButton extends StatelessWidget {
+  const _ReplaceButton({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 28,
+        height: 28,
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.8),
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(Icons.photo_camera_outlined, size: 16),
       ),
     );
   }

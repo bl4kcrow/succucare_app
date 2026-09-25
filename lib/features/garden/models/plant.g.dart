@@ -34,8 +34,8 @@ const _$MoistureSourceEnumMap = {
 
 _Illumination _$IlluminationFromJson(Map<String, dynamic> json) =>
     _Illumination(
-      current: $enumDecode(_$LightLEvelEnumMap, json['current']),
-      target: $enumDecode(_$LightLEvelEnumMap, json['target']),
+      current: $enumDecode(_$LightLevelEnumMap, json['current']),
+      target: $enumDecode(_$LightLevelEnumMap, json['target']),
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
@@ -43,12 +43,12 @@ _Illumination _$IlluminationFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$IlluminationToJson(_Illumination instance) =>
     <String, dynamic>{
-      'current': _$LightLEvelEnumMap[instance.current]!,
-      'target': _$LightLEvelEnumMap[instance.target]!,
+      'current': _$LightLevelEnumMap[instance.current]!,
+      'target': _$LightLevelEnumMap[instance.target]!,
       'updatedAt': instance.updatedAt?.toIso8601String(),
     };
 
-const _$LightLEvelEnumMap = {
+const _$LightLevelEnumMap = {
   LightLevel.fullSun: 'fullSun',
   LightLevel.brightIndirect: 'brightIndirect',
   LightLevel.partialSun: 'partialSun',
