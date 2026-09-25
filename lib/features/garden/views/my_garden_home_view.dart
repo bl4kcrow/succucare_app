@@ -108,7 +108,10 @@ class _MyGardenHomeViewState extends ConsumerState<MyGardenHomeView> {
                           padding: const EdgeInsets.only(bottom: Insets.medium),
                           child: PlantCard(
                             plant: plant,
-                            onTap: () => _showComingSoon(plant.commonName),
+                            onTap: () => context.pushNamed(
+                              Routes.editPlant.name,
+                              extra: plant,
+                            ),
                             onWaterPressed: () => _showComingSoon('Watering'),
                           ),
                         );

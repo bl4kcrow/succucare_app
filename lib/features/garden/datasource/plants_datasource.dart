@@ -8,6 +8,7 @@ abstract class PlantsDatasource {
   Future<PlantPage> loadInitialPlants();
   Future<PlantPage> loadNextPlants(dynamic cursor);
   Future<String> createPlant(Plant plant);
+  Future<void> updatePlant(Plant plant);
   Future<void> updatePlantPhotoUrl(String url, String plantId);
 }
 
@@ -72,6 +73,21 @@ class FirestorePlantsDatasource implements PlantsDatasource {
     await docRef.set(data);
 
     return docId;
+  }
+
+  @override
+  Future<void> updatePlant(Plant plant) async {
+    final firestorePlant = PlantMapper.plantToFirestorePlant(plant);
+    final data = firestorePlant.toJson();
+    data['id'] = plant.id;
+
+    final docRef = db
+        .collection('users')
+        .doc('$_uid')
+        .collection('plants')
+        .doc(plant.id);
+
+    await docRef.set(data);
   }
 
   @override
@@ -227,6 +243,11 @@ class MockPlantsDatasource implements PlantsDatasource {
   Future<String> createPlant(Plant plant) async {
     // Mock implementation: no-op
     return '';
+  }
+
+  @override
+  Future<void> updatePlant(Plant plant) async {
+    // Mock implementation: no-op
   }
 
   @override

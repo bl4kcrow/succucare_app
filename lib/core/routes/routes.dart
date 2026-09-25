@@ -1,6 +1,7 @@
 enum Routes {
   alerts('/alerts'),
   addPlant('/add-plant'),
+  editPlant('/edit-plant'),
   home('/home'),
   login('/login'),
   createAccount('create-account'),

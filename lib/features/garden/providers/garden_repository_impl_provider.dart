@@ -31,6 +31,11 @@ class GardenRespositoryImpl implements GardenRepository {
   }
 
   @override
+  Future<void> updatePlant(Plant plant) {
+    return plantsDatasource.updatePlant(plant);
+  }
+
+  @override
   Future<void> updatePlantPhotoUrl(String url, String plantId) {
     return plantsDatasource.updatePlantPhotoUrl(url, plantId);
   }

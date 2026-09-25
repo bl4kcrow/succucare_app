@@ -33,7 +33,7 @@ final class MyGardenNotifierProvider
   MyGardenNotifier create() => MyGardenNotifier();
 }
 
-String _$myGardenNotifierHash() => r'8ba780e0921e9b948d85de67a9835cb67bacadbe';
+String _$myGardenNotifierHash() => r'5812e1adedda71e48b96550e969567d911582e56';
 
 abstract class _$MyGardenNotifier extends $AsyncNotifier<List<Plant>> {
   FutureOr<List<Plant>> build();
