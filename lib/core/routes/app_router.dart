@@ -39,20 +39,29 @@ GoRouter appRouter(Ref ref) {
     initialLocation: Routes.splash.value,
     refreshListenable: authenticationState,
     redirect: (context, state) {
-      if (state.fullPath == Routes.splash.value) {
-        return authenticationState.value == AuthenticationState.authenticated
+      final authState = authenticationState.value;
+      final fullPath = state.fullPath;
+      final isPublicRoute =
+          fullPath == Routes.splash.value ||
+          fullPath == Routes.login.value ||
+          (fullPath?.startsWith('${Routes.login.value}/') ?? false);
+
+      if (fullPath == Routes.splash.value) {
+        if (authState == AuthenticationState.unknown) return null;
+        return authState == AuthenticationState.authenticated
             ? Routes.home.value
             : Routes.login.value;
       }
 
-      if (state.fullPath == Routes.login.value ||
-          state.fullPath == Routes.createAccount.value) {
-        return authenticationState.value == AuthenticationState.authenticated
+      if (isPublicRoute) {
+        return authState == AuthenticationState.authenticated
             ? Routes.home.value
             : null;
       }
 
-      return null;
+      return authState == AuthenticationState.authenticated
+          ? null
+          : Routes.login.value;
     },
     routes: <RouteBase>[
       GoRoute(
@@ -133,6 +142,13 @@ GoRouter appRouter(Ref ref) {
         path: Routes.editPlant.value,
         builder: (context, state) {
           return EditPlantScreen(plant: state.extra as Plant);
+        },
+      ),
+      GoRoute(
+        name: Routes.settings.name,
+        path: Routes.settings.value,
+        builder: (context, state) {
+          return const SettingsScreen();
         },
       ),
     ],

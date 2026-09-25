@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class GardenAppBar extends StatelessWidget implements PreferredSizeWidget {
-  GardenAppBar({super.key}) : preferredSize = Size.fromHeight(kToolbarHeight);
+  GardenAppBar({super.key, required this.onSettingsPressed})
+    : preferredSize = Size.fromHeight(kToolbarHeight);
 
   @override
   final Size preferredSize;
+
+  final VoidCallback onSettingsPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,12 @@ class GardenAppBar extends StatelessWidget implements PreferredSizeWidget {
         'SuccuCare',
         style: textTheme.headlineLarge?.copyWith(color: colorScheme.primary),
       ),
-      actions: [IconButton(onPressed: () {}, icon: Icon(Symbols.settings))],
+      actions: [
+        IconButton(
+          onPressed: onSettingsPressed,
+          icon: Icon(Symbols.settings),
+        ),
+      ],
     );
   }
 }

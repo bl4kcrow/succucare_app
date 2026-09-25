@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import 'package:succucare_app/core/routes/routes.dart';
 import 'package:succucare_app/features/garden/widgets/widgets.dart';
 
 enum GardenDestination { garden, scan, alerts }
@@ -36,7 +37,9 @@ class MyGardenScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GardenAppBar(),
+      appBar: GardenAppBar(
+        onSettingsPressed: () => context.goNamed(Routes.settings.name),
+      ),
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
