@@ -13,13 +13,20 @@ class FirebaseAuthService implements AuthService {
     StreamController<AuthenticationState> controller =
         StreamController<AuthenticationState>();
 
-    FirebaseAuth.instance.authStateChanges().listen((user) {
-      if (user != null) {
-        controller.add(AuthenticationState.authenticated);
-      } else {
+    FirebaseAuth.instance.authStateChanges().listen(
+      (user) {
+        if (user != null) {
+          controller.add(AuthenticationState.authenticated);
+        } else {
+          controller.add(AuthenticationState.unauthenticated);
+        }
+      },
+      onError: (Object error, StackTrace stackTrace) {
         controller.add(AuthenticationState.unauthenticated);
-      }
-    });
+        controller.close();
+      },
+      onDone: controller.close,
+    );
 
     return controller.stream;
   }
