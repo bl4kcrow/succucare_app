@@ -38,7 +38,7 @@ class MyGardenScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GardenAppBar(
-        onSettingsPressed: () => context.goNamed(Routes.settings.name),
+        onSettingsPressed: () => context.pushNamed(Routes.settings.name),
       ),
       body: navigationShell,
       bottomNavigationBar: NavigationBar(

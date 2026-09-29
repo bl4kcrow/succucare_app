@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:succucare_app/core/theme/app_colors.dart';
 import 'package:succucare_app/core/theme/insets.dart';
@@ -56,6 +57,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: colorScheme.onSurface,
+          onPressed: () => context.pop(),
+        ),
         title: Text(
           'Settings',
           style: textTheme.headlineMedium?.copyWith(color: colorScheme.primary),
