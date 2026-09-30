@@ -98,13 +98,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         (event) =>
                             FocusManager.instance.primaryFocus?.unfocus(),
                   ),
-                  Text(
-                    'Forgot Password?',
+                  Text.rich(
                     textAlign: TextAlign.end,
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: AppColors.englishLavender,
-                      decoration: TextDecoration.underline,
-                      decorationColor: AppColors.englishLavender,
+                    TextSpan(
+                      text: 'Forgot Password?',
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: AppColors.englishLavender,
+                        decoration: TextDecoration.underline,
+                        decorationColor: AppColors.englishLavender,
+                      ),
+                      recognizer:
+                          TapGestureRecognizer()
+                            ..onTap = () {
+                              context.pushNamed(Routes.forgotPassword.name);
+                            },
                     ),
                   ),
                   const SizedBox(height: Insets.extraLarge),

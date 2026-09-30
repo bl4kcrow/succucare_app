@@ -44,9 +44,13 @@ class FirebaseAuthService implements AuthService {
   }
 
   @override
-  Future<void> sendPasswordResetEmail(String email) {
-    // TODO: implement sendPasswordResetEmail
-    throw UnimplementedError();
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    } catch (error) {
+      debugPrint('Error reset email: $error');
+      rethrow;
+    }
   }
 
   @override
