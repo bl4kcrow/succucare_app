@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'package:succucare_app/core/errors/errors.dart';
 import 'package:succucare_app/features/garden/models/models.dart';
 import 'package:succucare_app/features/garden/providers/providers.dart';
 
@@ -18,13 +19,13 @@ class EditPlantState {
   final Plant plant;
   final List<File> selectedImages;
   final bool isSubmitting;
-  final String? errorMessage;
+  final AppFailure? errorMessage;
 
   EditPlantState copyWith({
     Plant? plant,
     List<File>? selectedImages,
     bool? isSubmitting,
-    String? errorMessage,
+    AppFailure? errorMessage,
     bool clearError = false,
   }) {
     return EditPlantState(
@@ -166,7 +167,9 @@ class EditPlantNotifier extends _$EditPlantNotifier {
 
   Future<bool> submitPlant() async {
     if (!validate()) {
-      state = state.copyWith(errorMessage: 'Please fill all the fields');
+      state = state.copyWith(
+        errorMessage: AppFailure(AppFailureCode.validation),
+      );
       return false;
     }
 
@@ -217,7 +220,7 @@ class EditPlantNotifier extends _$EditPlantNotifier {
     } catch (error) {
       state = state.copyWith(
         isSubmitting: false,
-        errorMessage: error.toString(),
+        errorMessage: AppFailure.from(error),
       );
       return false;
     }
