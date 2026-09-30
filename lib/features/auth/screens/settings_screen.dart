@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:succucare_app/core/errors/errors.dart';
 import 'package:succucare_app/core/theme/app_colors.dart';
 import 'package:succucare_app/core/theme/insets.dart';
 import 'package:succucare_app/core/utils/custom_snack_bar_content.dart';
@@ -30,7 +31,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       setState(() => _isSigningOut = false);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: CustomSnackBarContent(message: error.toString()),
+          content: CustomSnackBarContent(
+            message: AppFailure.from(error).userMessage,
+          ),
           behavior: SnackBarBehavior.floating,
           backgroundColor: Colors.transparent,
           elevation: 0,

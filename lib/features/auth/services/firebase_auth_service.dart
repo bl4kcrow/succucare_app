@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../core/errors/errors.dart';
 import '../models/models.dart';
 import '../providers/providers.dart';
 import 'services.dart';
@@ -49,7 +50,7 @@ class FirebaseAuthService implements AuthService {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
     } catch (error) {
       debugPrint('Error reset email: $error');
-      rethrow;
+      throw AppFailure.from(error);
     }
   }
 
@@ -73,7 +74,7 @@ class FirebaseAuthService implements AuthService {
       );
     } catch (error) {
       debugPrint('Error signing in: $error');
-      rethrow;
+      throw AppFailure.from(error);
     }
 
     return appUser;
@@ -100,7 +101,7 @@ class FirebaseAuthService implements AuthService {
       }
     } catch (error) {
       debugPrint('Error signing up: $error');
-      rethrow;
+      throw AppFailure.from(error);
     }
 
     return appUser;
@@ -108,14 +109,24 @@ class FirebaseAuthService implements AuthService {
 
   @override
   Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
+    try {
+      await FirebaseAuth.instance.signOut();
+    } catch (error) {
+      debugPrint('Error signing out: $error');
+      throw AppFailure.from(error);
+    }
   }
 
   @override
   Future<void> deleteAccount() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      await user.delete();
+      try {
+        await user.delete();
+      } catch (error) {
+        debugPrint('Error deleting account: $error');
+        throw AppFailure.from(error);
+      }
     } else {
       debugPrint('No user is currently signed in.');
     }

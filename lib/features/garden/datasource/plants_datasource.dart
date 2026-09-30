@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart' show debugPrint;
 
+import 'package:succucare_app/core/errors/errors.dart';
 import 'package:succucare_app/features/garden/mappers/mappers.dart';
 import 'package:succucare_app/features/garden/models/models.dart';
 
@@ -27,18 +29,23 @@ class FirestorePlantsDatasource implements PlantsDatasource {
       .orderBy(FieldPath.documentId, descending: true);
 
   Future<PlantPage> _loadPlants(Query<Map<String, dynamic>> query) async {
-    final querySnapshot = await query.limit(_queryLimit).get();
+    try {
+      final querySnapshot = await query.limit(_queryLimit).get();
 
-    final plants = querySnapshot.docs.map((documentSnapshot) {
-      return PlantMapper.firestorePlantToPlant(
-        FirestorePlant.fromSnapshot(documentSnapshot),
-      );
-    }).toList();
+      final plants = querySnapshot.docs.map((documentSnapshot) {
+        return PlantMapper.firestorePlantToPlant(
+          FirestorePlant.fromSnapshot(documentSnapshot),
+        );
+      }).toList();
 
-    final hasMore = querySnapshot.docs.length == _queryLimit;
-    final cursor = hasMore ? querySnapshot.docs.last : null;
+      final hasMore = querySnapshot.docs.length == _queryLimit;
+      final cursor = hasMore ? querySnapshot.docs.last : null;
 
-    return PlantPage(plants: plants, nextCursor: cursor);
+      return PlantPage(plants: plants, nextCursor: cursor);
+    } catch (error) {
+      debugPrint('Error loading plants: $error');
+      throw AppFailure.from(error);
+    }
   }
 
   @override
@@ -70,7 +77,12 @@ class FirestorePlantsDatasource implements PlantsDatasource {
 
     data['id'] = docId = docRef.id;
 
-    await docRef.set(data);
+    try {
+      await docRef.set(data);
+    } catch (error) {
+      debugPrint('Error creating plant: $error');
+      throw AppFailure.from(error);
+    }
 
     return docId;
   }
@@ -87,7 +99,12 @@ class FirestorePlantsDatasource implements PlantsDatasource {
         .collection('plants')
         .doc(plant.id);
 
-    await docRef.set(data);
+    try {
+      await docRef.set(data);
+    } catch (error) {
+      debugPrint('Error updating plant: $error');
+      throw AppFailure.from(error);
+    }
   }
 
   @override
@@ -98,7 +115,12 @@ class FirestorePlantsDatasource implements PlantsDatasource {
         .collection('plants')
         .doc(plantId);
 
-    await docRef.update({'primaryPhotoUrl': url});
+    try {
+      await docRef.update({'primaryPhotoUrl': url});
+    } catch (error) {
+      debugPrint('Error updating plant photo url: $error');
+      throw AppFailure.from(error);
+    }
   }
 }
 

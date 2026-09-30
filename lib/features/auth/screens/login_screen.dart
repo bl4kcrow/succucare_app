@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/errors/errors.dart';
 import '../../../core/routes/routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/insets.dart';
@@ -129,7 +130,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: CustomSnackBarContent(
-                                  message: error.toString(),
+                                  message: AppFailure.from(error).userMessage,
                                 ),
                                 behavior: SnackBarBehavior.floating,
                                 backgroundColor: Colors.transparent,

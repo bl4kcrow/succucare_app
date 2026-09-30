@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -50,6 +51,16 @@ class FakeAuthRepository implements AuthRepository {
 }
 
 const String successMessage = 'Password reset email sent. Check your inbox.';
+
+String renderedText(WidgetTester tester) {
+  return tester
+      .widgetList<Text>(find.byType(Text))
+      .map(
+        (widget) =>
+            widget.data ?? widget.textSpan?.toPlainText() ?? '',
+      )
+      .join(' | ');
+}
 
 Widget buildApp({required FakeAuthRepository repository}) {
   return ProviderScope(
@@ -167,7 +178,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Reset Password'), findsOneWidget);
-    expect(find.text('Exception: network unavailable'), findsOneWidget);
+    expect(find.text('Something went wrong. Try again.'), findsOneWidget);
+    expect(renderedText(tester), isNot(contains('network unavailable')));
+    expect(renderedText(tester), isNot(contains('Exception')));
     expect(find.text('Send Reset Link'), findsOneWidget);
     expect(repository.resetEmails, ['peter@example.com']);
 
@@ -181,5 +194,34 @@ void main() {
     expect(repository.resetEmails, ['peter@example.com', 'peter@example.com']);
     expect(find.text('Reset Password'), findsNothing);
     expect(find.text(successMessage), findsOneWidget);
+  });
+
+  testWidgets('shows specific wording for a Firebase failure and never its raw detail', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(800, 1700);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    final repository = FakeAuthRepository(
+      resetError: FirebaseAuthException(
+        code: 'network-request-failed',
+        message: 'ERROR [auth/network-request-failed] peter@example.com',
+      ),
+    );
+    await tester.pumpWidget(buildApp(repository: repository));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextFormField), 'peter@example.com');
+    await tester.tap(find.text('Send Reset Link'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('No connection. Check your network.'), findsOneWidget);
+
+    final rendered = renderedText(tester);
+    expect(rendered, isNot(contains('network-request-failed')));
+    expect(rendered, isNot(contains('FirebaseAuthException')));
+    expect(rendered, isNot(contains('ERROR [')));
+    expect(rendered, isNot(contains('firebase_auth')));
   });
 }

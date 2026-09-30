@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart' show debugPrint;
+
+import 'package:succucare_app/core/errors/errors.dart';
 
 abstract class PlantPhotoDatasource {
   Future<String> uploadPlantPhoto(String plantId, File imageFile);
@@ -19,8 +22,15 @@ class FirebasePlantPhotoDatasource implements PlantPhotoDatasource {
       'users/${_user?.uid}/plants/$plantId/photos/$fileName.jpg',
     );
 
-    await ref.putFile(imageFile);
-    return ref.getDownloadURL();
+    try {
+      await ref.putFile(imageFile);
+      final downloadUrl = await ref.getDownloadURL();
+
+      return downloadUrl;
+    } catch (error) {
+      debugPrint('Error uploading plant photo: $error');
+      throw AppFailure.from(error);
+    }
   }
 
   @override
@@ -28,6 +38,12 @@ class FirebasePlantPhotoDatasource implements PlantPhotoDatasource {
     final uri = Uri.parse(photoUrl);
     final encodedPath = uri.pathSegments.last;
     final storagePath = Uri.decodeComponent(encodedPath);
-    await _storage.ref(storagePath).delete();
+
+    try {
+      await _storage.ref(storagePath).delete();
+    } catch (error) {
+      debugPrint('Error deleting plant photo: $error');
+      throw AppFailure.from(error);
+    }
   }
 }

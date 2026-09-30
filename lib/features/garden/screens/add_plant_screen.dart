@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:succucare_app/core/errors/errors.dart';
 import 'package:succucare_app/core/theme/app_colors.dart';
 import 'package:succucare_app/features/garden/models/models.dart';
 import 'package:succucare_app/features/garden/providers/providers.dart';
@@ -55,11 +56,11 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
     }
   }
 
-  void _showError(String? message) {
-    if (message == null || message.isEmpty) return;
+  void _showError(AppFailure? failure) {
+    if (failure == null) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(failure.userMessage),
         behavior: SnackBarBehavior.floating,
         backgroundColor: AppColors.frenchRaspberry,
       ),
@@ -71,11 +72,11 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final addPlant = ref.watch(addPlantProvider);
-    final errorMessage = addPlant.errorMessage;
+    final failure = addPlant.errorMessage;
 
-    if (errorMessage != null) {
+    if (failure != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _showError(errorMessage);
+        _showError(failure);
         ref.read(addPlantProvider.notifier).clearError();
       });
     }
