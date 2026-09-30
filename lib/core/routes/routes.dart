@@ -5,6 +5,7 @@ enum Routes {
   home('/home'),
   login('/login'),
   createAccount('create-account'),
+  forgotPassword('forgot-password'),
   settings('/settings'),
   scanPlant('/scan-plant'),
   scanResult('/scan-result'),

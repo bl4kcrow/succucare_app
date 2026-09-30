@@ -2,3 +2,4 @@ export 'login_screen.dart';
 export 'settings_screen.dart';
 export 'splash_screen.dart';
 export 'create_account_screen.dart';
+export 'forgot_password_screen.dart';

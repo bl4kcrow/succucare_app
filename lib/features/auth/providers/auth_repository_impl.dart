@@ -21,13 +21,11 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  // TODO: implement authStateChanges
   Stream<AuthenticationState> authStateChanges() => authService.authStateChanges();
 
   @override
-  Future<void> sendPasswordResetEmail(String email) {
-    // TODO: implement sendPasswordResetEmail
-    throw UnimplementedError();
+  Future<void> sendPasswordResetEmail(String email) async {
+    await authService.sendPasswordResetEmail(email);
   }
 
   @override

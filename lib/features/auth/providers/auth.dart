@@ -49,6 +49,12 @@ class Auth extends _$Auth {
     state = state.copyWith(user: userResult);
   }
 
+  Future<void> sendPasswordResetEmail({required String email}) async {
+    final authRepository = ref.watch(authRepositoryProvider);
+
+    await authRepository.sendPasswordResetEmail(email);
+  }
+
   Future<void> signOut() async {
     final authRepository = ref.watch(authRepositoryProvider);
     await authRepository.signOut();

@@ -85,6 +85,13 @@ GoRouter appRouter(Ref ref) {
               return const CreateAccountScreen();
             },
           ),
+          GoRoute(
+            name: Routes.forgotPassword.name,
+            path: Routes.forgotPassword.value,
+            builder: (context, state) {
+              return const ForgotPasswordScreen();
+            },
+          ),
         ],
       ),
       StatefulShellRoute.indexedStack(
