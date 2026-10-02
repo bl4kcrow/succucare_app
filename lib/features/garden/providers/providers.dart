@@ -3,3 +3,4 @@ export 'edit_plant_provider.dart';
 export 'garden_repository_impl_provider.dart';
 export 'my_garden_provider.dart';
 export 'photos_repository_impl_provider.dart';
+export 'plant_by_id_provider.dart';

@@ -26,6 +26,11 @@ class GardenRespositoryImpl implements GardenRepository {
   }
 
   @override
+  Future<Plant> loadPlantById(String plantId) {
+    return plantsDatasource.loadPlantById(plantId);
+  }
+
+  @override
   Future<String> createPlant(Plant plant) {
     return plantsDatasource.createPlant(plant);
   }

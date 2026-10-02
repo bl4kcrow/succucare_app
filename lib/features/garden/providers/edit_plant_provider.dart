@@ -214,6 +214,7 @@ class EditPlantNotifier extends _$EditPlantNotifier {
       await ref.read(gardenRepositoryImplProvider).updatePlant(plant);
 
       ref.invalidate(myGardenProvider);
+      ref.invalidate(plantByIdProvider(plant.id));
 
       state = state.copyWith(isSubmitting: false);
       return true;

@@ -6,7 +6,6 @@ import 'package:succucare_app/features/garden/screens/screens.dart';
 import 'package:succucare_app/features/auth/providers/providers.dart';
 import 'package:succucare_app/features/auth/screens/screens.dart';
 import 'package:succucare_app/features/garden/views/views.dart';
-import 'package:succucare_app/features/garden/models/models.dart';
 import 'routes.dart';
 
 part 'app_router.g.dart';
@@ -146,10 +145,14 @@ GoRouter appRouter(Ref ref) {
       ),
       GoRoute(
         name: Routes.editPlant.name,
-        path: Routes.editPlant.value,
+        path: '${Routes.editPlant.value}/:plantId',
         builder: (context, state) {
-          return EditPlantScreen(plant: state.extra as Plant);
+          return EditPlantScreen(plantId: state.pathParameters['plantId']!);
         },
+      ),
+      GoRoute(
+        path: Routes.editPlant.value,
+        redirect: (context, state) => Routes.home.value,
       ),
       GoRoute(
         name: Routes.settings.name,

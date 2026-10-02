@@ -110,7 +110,7 @@ class _MyGardenHomeViewState extends ConsumerState<MyGardenHomeView> {
                             plant: plant,
                             onTap: () => context.pushNamed(
                               Routes.editPlant.name,
-                              extra: plant,
+                              pathParameters: {'plantId': plant.id},
                             ),
                             onWaterPressed: () => _showComingSoon('Watering'),
                           ),
