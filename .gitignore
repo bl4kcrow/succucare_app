@@ -52,3 +52,5 @@ app.*.map.json
 
 #AI
 .secrets/
+# Widget Preview related
+.widget_preview/
