@@ -58,7 +58,7 @@ final class EditPlantNotifierProvider
   }
 }
 
-String _$editPlantNotifierHash() => r'0a64ac6d262010ae04e5df94df1a7461849ac6e1';
+String _$editPlantNotifierHash() => r'dd220b1a7557880a02a4750f4024dd253fc533ff';
 
 final class EditPlantNotifierFamily extends $Family
     with

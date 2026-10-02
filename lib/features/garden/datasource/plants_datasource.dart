@@ -9,6 +9,7 @@ import 'package:succucare_app/features/garden/models/models.dart';
 abstract class PlantsDatasource {
   Future<PlantPage> loadInitialPlants();
   Future<PlantPage> loadNextPlants(dynamic cursor);
+  Future<Plant> loadPlantById(String plantId);
   Future<String> createPlant(Plant plant);
   Future<void> updatePlant(Plant plant);
   Future<void> updatePlantPhotoUrl(String url, String plantId);
@@ -59,6 +60,32 @@ class FirestorePlantsDatasource implements PlantsDatasource {
       return _loadPlants(_plantsQuery.startAfterDocument(cursor));
     } else {
       return Future.value(const PlantPage(plants: []));
+    }
+  }
+
+  @override
+  Future<Plant> loadPlantById(String plantId) async {
+    final docRef = db
+        .collection('users')
+        .doc('$_uid')
+        .collection('plants')
+        .doc(plantId);
+
+    try {
+      final snapshot = await docRef.get();
+
+      if (!snapshot.exists) {
+        throw AppFailure(AppFailureCode.notFound);
+      }
+
+      return PlantMapper.firestorePlantToPlant(
+        FirestorePlant.fromSnapshot(snapshot),
+      );
+    } on AppFailure {
+      rethrow;
+    } catch (error) {
+      debugPrint('Error loading plant $plantId: $error');
+      throw AppFailure.from(error);
     }
   }
 
@@ -258,6 +285,18 @@ class MockPlantsDatasource implements PlantsDatasource {
           ),
         ],
       ),
+    );
+  }
+
+  @override
+  Future<Plant> loadPlantById(String plantId) async {
+    final initial = await loadInitialPlants();
+    final next = await loadNextPlants(null);
+    final plants = [...initial.plants, ...next.plants];
+
+    return plants.firstWhere(
+      (plant) => plant.id == plantId,
+      orElse: () => throw AppFailure(AppFailureCode.notFound),
     );
   }
 

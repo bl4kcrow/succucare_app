@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:succucare_app/core/errors/errors.dart';
 import 'package:succucare_app/features/garden/datasource/datasource.dart';
 import 'package:succucare_app/features/garden/models/models.dart';
 import 'package:succucare_app/features/garden/providers/providers.dart';
@@ -16,13 +17,26 @@ const String transparentPng =
     'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
 
 class RecordingGardenRepository implements GardenRepository {
-  RecordingGardenRepository({this.createPlantId = 'new-plant-id', this.createError, this.updateError});
+  RecordingGardenRepository({
+    this.createPlantId = 'new-plant-id',
+    this.createError,
+    this.updateError,
+    this.plants = const [],
+  });
 
   int createCalls = 0;
   int updateCalls = 0;
   final String createPlantId;
   final Object? createError;
   final Object? updateError;
+  final List<Plant> plants;
+
+  @override
+  Future<Plant> loadPlantById(String plantId) async {
+    final plant = plants.where((candidate) => candidate.id == plantId).firstOrNull;
+    if (plant == null) throw AppFailure(AppFailureCode.notFound);
+    return plant;
+  }
 
   @override
   Future<PlantPage> loadInitialPlants() async =>
@@ -166,6 +180,7 @@ void main() {
 
     final plant = await plantWithoutPhoto();
     final garden = RecordingGardenRepository(
+      plants: [plant],
       updateError: FirebaseException(
         plugin: 'cloud_firestore',
         code: 'permission-denied',
@@ -181,7 +196,7 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: MaterialApp(home: EditPlantScreen(plant: plant)),
+        child: MaterialApp(home: EditPlantScreen(plantId: plant.id)),
       ),
     );
     await tester.pumpAndSettle();
