@@ -16,6 +16,10 @@ enum AppFailureCode {
   quotaExceeded('Storage is full. Free up space.'),
   invalidData("That information isn't valid."),
   validation('Please fill all the fields'),
+  plantIdentificationUnavailable("Plant identification isn't available right now."),
+  plantIdentificationPhotoTooLarge('That photo is too large to identify. Choose another.'),
+  plantIdentificationRateLimited('Identification is busy right now. Try again later.'),
+  plantIdentificationNoResult("Couldn't identify that plant. Fill in the details yourself."),
   unknown('Something went wrong. Try again.');
 
   const AppFailureCode(this.userMessage);

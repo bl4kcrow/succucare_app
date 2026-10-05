@@ -38,6 +38,18 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
     });
   }
 
+  /// Identification writes its proposal through the notifier, so the form has
+  /// to be told about it. Writes the value back only when it differs, which
+  /// keeps this from fighting the user mid-edit.
+  void _syncController(TextEditingController controller, String value) {
+    if (controller.text == value) return;
+
+    controller.value = TextEditingValue(
+      text: value,
+      selection: TextSelection.collapsed(offset: value.length),
+    );
+  }
+
   @override
   void dispose() {
     _scientificNameController.dispose();
@@ -73,6 +85,23 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
     final textTheme = Theme.of(context).textTheme;
     final addPlant = ref.watch(addPlantProvider);
     final failure = addPlant.errorMessage;
+
+    ref.listen(addPlantProvider.select((state) => state.plant.commonName), (
+      previous,
+      next,
+    ) {
+      _syncController(_commonNameController, next);
+    });
+    ref.listen(
+      addPlantProvider.select((state) => state.plant.scientificName),
+      (previous, next) => _syncController(_scientificNameController, next),
+    );
+    ref.listen(addPlantProvider.select((state) => state.plant.notes), (
+      previous,
+      next,
+    ) {
+      _syncController(_notesController, next);
+    });
 
     if (failure != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -137,6 +166,8 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
                 selectedImages: addPlant.selectedImages,
                 onImageAdded: ref.read(addPlantProvider.notifier).addImage,
                 onImageRemoved: ref.read(addPlantProvider.notifier).removeImage,
+                onIdentify: ref.read(addPlantProvider.notifier).identify,
+                isIdentifying: addPlant.isIdentifying,
               ),
               const SizedBox(height: 24),
               IdentificationCard(

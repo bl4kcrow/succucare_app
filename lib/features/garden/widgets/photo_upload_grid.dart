@@ -17,12 +17,16 @@ class PhotoUploadGrid extends StatelessWidget {
     required this.onImageAdded,
     required this.onImageRemoved,
     this.existingPhotoUrl,
+    this.onIdentify,
+    this.isIdentifying = false,
   });
 
   final List<File> selectedImages;
   final ValueChanged<File> onImageAdded;
   final ValueChanged<int> onImageRemoved;
   final String? existingPhotoUrl;
+  final VoidCallback? onIdentify;
+  final bool isIdentifying;
 
   Future<void> _pickImage(BuildContext context) async {
     final source = await _showImageSourceSheet(context);
@@ -59,7 +63,51 @@ class PhotoUploadGrid extends StatelessWidget {
                 )
               : _MainPhotoPlaceholder(onTap: () => _pickImage(context)),
         ),
+        if (onIdentify != null && selectedImages.isNotEmpty) ...[
+          const SizedBox(height: Insets.small),
+          _IdentifyButton(
+            onTap: isIdentifying ? null : onIdentify,
+            isIdentifying: isIdentifying,
+          ),
+        ],
       ],
+    );
+  }
+}
+
+class _IdentifyButton extends StatelessWidget {
+  const _IdentifyButton({required this.onTap, required this.isIdentifying});
+
+  final VoidCallback? onTap;
+  final bool isIdentifying;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Center(
+      child: TextButton.icon(
+        onPressed: onTap,
+        icon: isIdentifying
+            ? SizedBox(
+                width: 14,
+                height: 14,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: colorScheme.primary,
+                ),
+              )
+            : Icon(Icons.auto_awesome, size: 16, color: colorScheme.primary),
+        label: Text(
+          isIdentifying ? 'Identificando…' : 'Identificar planta',
+          style: textTheme.labelLarge?.copyWith(
+            color: isIdentifying
+                ? colorScheme.onSurfaceVariant
+                : colorScheme.primary,
+          ),
+        ),
+      ),
     );
   }
 }
