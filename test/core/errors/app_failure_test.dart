@@ -54,4 +54,45 @@ void main() {
     expect(messages.toSet().length, AppFailureCode.values.length);
     expect(messages, everyElement(isNotEmpty));
   });
+
+  group('identification wording', () {
+    test('the four identification codes carry the wording the spec table names', () {
+      expect(
+        AppFailureCode.plantIdentificationUnavailable.userMessage,
+        "Plant identification isn't available right now.",
+      );
+      expect(
+        AppFailureCode.plantIdentificationPhotoTooLarge.userMessage,
+        'That photo is too large to identify. Choose another.',
+      );
+      expect(
+        AppFailureCode.plantIdentificationRateLimited.userMessage,
+        'Identification is busy right now. Try again later.',
+      );
+      expect(
+        AppFailureCode.plantIdentificationNoResult.userMessage,
+        "Couldn't identify that plant. Fill in the details yourself.",
+      );
+    });
+
+    test('each identification code is distinct from every other code', () {
+      final identification = [
+        AppFailureCode.plantIdentificationUnavailable,
+        AppFailureCode.plantIdentificationPhotoTooLarge,
+        AppFailureCode.plantIdentificationRateLimited,
+        AppFailureCode.plantIdentificationNoResult,
+      ];
+      final others = AppFailureCode.values
+          .where((code) => !identification.contains(code))
+          .toList();
+
+      for (final code in identification) {
+        expect(
+          others.map((other) => other.userMessage),
+          isNot(contains(code.userMessage)),
+          reason: '$code shares its wording with an existing cause',
+        );
+      }
+    });
+  });
 }

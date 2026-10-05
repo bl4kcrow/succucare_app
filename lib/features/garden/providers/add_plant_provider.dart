@@ -1,12 +1,22 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:succucare_app/core/errors/errors.dart';
 import 'package:succucare_app/features/garden/models/models.dart';
 import 'package:succucare_app/features/garden/providers/providers.dart';
+import 'package:succucare_app/features/garden/services/services.dart';
 
 part 'add_plant_provider.g.dart';
+
+/// The largest photo that will be submitted for identification.
+///
+/// Inline file data is base64 in transit, which inflates the request by roughly
+/// a third, so the guard sits below what the transport would otherwise accept.
+const int maxIdentificationPhotoBytes = 5 * 1024 * 1024;
+
+enum IdentificationStatus { idle, inProgress, completed }
 
 class NewPlantState {
   NewPlantState({
@@ -34,18 +44,23 @@ class NewPlantState {
     ),
     this.selectedImages = const [],
     this.isSubmitting = false,
+    this.identificationStatus = IdentificationStatus.idle,
     this.errorMessage,
   });
 
   final Plant plant;
   final List<File> selectedImages;
   final bool isSubmitting;
+  final IdentificationStatus identificationStatus;
   final AppFailure? errorMessage;
+
+  bool get isIdentifying => identificationStatus == IdentificationStatus.inProgress;
 
   NewPlantState copyWith({
     Plant? plant,
     List<File>? selectedImages,
     bool? isSubmitting,
+    IdentificationStatus? identificationStatus,
     AppFailure? errorMessage,
     bool clearError = false,
   }) {
@@ -53,9 +68,13 @@ class NewPlantState {
       plant: plant ?? this.plant,
       selectedImages: selectedImages ?? this.selectedImages,
       isSubmitting: isSubmitting ?? this.isSubmitting,
+      identificationStatus: identificationStatus ?? this.identificationStatus,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
     );
   }
+
+  NewPlantState clearIdentification() =>
+      copyWith(identificationStatus: IdentificationStatus.idle);
 }
 
 @riverpod
@@ -169,9 +188,105 @@ class AddPlantNotifier extends _$AddPlantNotifier {
     state = state.copyWith(selectedImages: newList);
   }
 
+  void clearIdentification() => state = state.clearIdentification();
+
   void reset() => state = NewPlantState();
 
   void clearError() => state = state.copyWith(clearError: true);
+
+  /// Submits the attached photo for identification and, when the answer is
+  /// usable, writes the proposed values through the setters above so the
+  /// derivation `submitPlant` performs stays in one place.
+  Future<bool> identify() async {
+    if (state.selectedImages.isEmpty) return false;
+
+    // The button is disabled while a request is in flight, but the notifier is
+    // the thing that has to refuse a second one.
+    if (state.isIdentifying) return false;
+
+    final image = state.selectedImages.first;
+
+    if (await image.length() > maxIdentificationPhotoBytes) {
+      state = state.copyWith(
+        errorMessage: AppFailure(AppFailureCode.plantIdentificationPhotoTooLarge),
+      );
+      return false;
+    }
+
+    state = state.copyWith(
+      identificationStatus: IdentificationStatus.inProgress,
+      clearError: true,
+    );
+
+    try {
+      final identification = await ref
+          .read(plantIdentificationServiceProvider)
+          .identify(
+            PlantPhotoInput(
+              bytes: await image.readAsBytes(),
+              mimeType: resolveMimeTypeFromPath(image.path),
+            ),
+          );
+
+      if (_usableValues(identification).isEmpty) {
+        state = state.copyWith(
+          identificationStatus: IdentificationStatus.idle,
+          errorMessage: AppFailure(AppFailureCode.plantIdentificationNoResult),
+        );
+        return false;
+      }
+
+      applyIdentification(identification);
+      return true;
+    } catch (error) {
+      debugPrint('Plant identification failed: $error');
+      state = state.copyWith(
+        identificationStatus: IdentificationStatus.idle,
+        errorMessage: AppFailure.from(error),
+      );
+      return false;
+    }
+  }
+
+  /// Writes each non-null proposed value through the existing setter, so a
+  /// proposal cannot produce a plant whose derived fields disagree with it.
+  void applyIdentification(PlantIdentification identification) {
+    final commonName = identification.commonName;
+    if (commonName != null) setCommonName(commonName);
+
+    final scientificName = identification.scientificName;
+    if (scientificName != null) setScientificName(scientificName);
+
+    final category = identification.category == null
+        ? null
+        : mapStringToCategory(identification.category);
+    if (category != null) toggleCategory(category);
+
+    final interval = identification.wateringIntervalDays;
+    if (interval != null) setWateringIntervalDays(interval);
+
+    final lightLevel = identification.lightLevel == null
+        ? null
+        : mapStringToLightLevel(identification.lightLevel);
+    if (lightLevel != null) {
+      setCurrentIllumination(lightLevel);
+      setTargetIllumination(lightLevel);
+    }
+
+    state = state.copyWith(
+      identificationStatus: IdentificationStatus.completed,
+    );
+  }
+
+  /// The proposed values the form can actually store. A source that answered
+  /// with nothing usable is reported rather than applied as an empty proposal.
+  List<Object?> _usableValues(PlantIdentification identification) => [
+    identification.commonName,
+    identification.scientificName,
+    identification.category,
+    identification.wateringIntervalDays,
+    identification.lightLevel,
+  ].where((value) => value != null).toList();
 
   bool validate() {
     if (state.plant.scientificName.trim().isEmpty) return false;

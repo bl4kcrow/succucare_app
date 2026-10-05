@@ -1,3 +1,4 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,12 @@ void main() async {
   // await FirebaseAuth.instance.useAuthEmulator('10.0.2.2', 9099);
   // To use a physical device for Firebase Auth
   // await FirebaseAuth.instance.useAuthEmulator('192.168.0.2', 9099);
+
+  await FirebaseAppCheck.instance.activate(
+    providerAndroid: const AndroidDebugProvider(
+      debugToken: "c8281665-cd71-45d8-baa5-cb4fe1bf7812",
+    ),
+  );
 
   runApp(ProviderScope(child: const MainApp()));
 }

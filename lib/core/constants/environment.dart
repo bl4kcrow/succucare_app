@@ -19,6 +19,16 @@ class Environment {
   final String firebaseApiKeyWeb;
   final String firebaseMessagingSenderId;
 
+  /// The plant identification backend to use, or `null` when none is
+  /// configured. Unlike the Firebase keys above this is optional, so it is read
+  /// with a fallback: a checkout whose `.env` predates plant identification
+  /// still starts and reports identification as unavailable.
+  static String? get aiProvider => dotenv.maybeGet('AI_PROVIDER');
+
+  /// The generative model name used for plant identification, or `null` to
+  /// let the identification backend pick its own default.
+  static String? get aiModel => dotenv.maybeGet('AI_MODEL');
+
   factory Environment.dev() => Environment._(
     firebaseAppIdAndroid: dotenv.get('FIREBASE_APPID_ANDROID_DEV'),
     firebaseAppIdIos: dotenv.get('FIREBASE_APPID_IOS_DEV'),
