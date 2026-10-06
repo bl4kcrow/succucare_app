@@ -1,6 +1,7 @@
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,6 +32,14 @@ void main() async {
       debugToken: "c8281665-cd71-45d8-baa5-cb4fe1bf7812",
     ),
   );
+
+  final NotificationSettings notificationSettings = await FirebaseMessaging
+      .instance
+      .requestPermission(provisional: true);
+
+  final String? FirebaseMessagingToken = await FirebaseMessaging.instance
+      .getToken();
+  debugPrint('FirebaseMessagingToken: $FirebaseMessagingToken');
 
   runApp(ProviderScope(child: const MainApp()));
 }

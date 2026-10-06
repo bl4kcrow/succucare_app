@@ -41,7 +41,7 @@ final class AddPlantNotifierProvider
   }
 }
 
-String _$addPlantNotifierHash() => r'7358f08a03340b96cf32bc6d08c6f983b88bee60';
+String _$addPlantNotifierHash() => r'38db73a7cb51d81b2e4ccb3a6ab768a08ab911c9';
 
 abstract class _$AddPlantNotifier extends $Notifier<NewPlantState> {
   NewPlantState build();
