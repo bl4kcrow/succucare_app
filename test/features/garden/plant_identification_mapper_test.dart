@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:succucare_app/features/garden/mappers/mappers.dart';
-import 'package:succucare_app/features/garden/models/models.dart';
+import 'package:succucare_app/features/garden/data/mappers/mappers.dart';
+import 'package:succucare_app/features/garden/data/models/models.dart';
 
 void main() {
   group('mapStringToCategory', () {

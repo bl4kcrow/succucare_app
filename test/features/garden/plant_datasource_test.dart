@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:succucare_app/core/errors/errors.dart';
-import 'package:succucare_app/features/garden/datasource/datasource.dart';
-import 'package:succucare_app/features/garden/models/models.dart';
-import 'package:succucare_app/features/garden/providers/providers.dart';
+import 'package:succucare_app/features/garden/data/datasource/datasource.dart';
+import 'package:succucare_app/features/garden/data/models/models.dart';
+import 'package:succucare_app/features/garden/ui/providers/providers.dart';
 
 class FakePlantsDatasource implements PlantsDatasource {
   FakePlantsDatasource({required this.plant});
