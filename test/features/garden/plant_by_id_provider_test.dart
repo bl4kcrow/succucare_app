@@ -2,10 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:succucare_app/core/errors/errors.dart';
-import 'package:succucare_app/features/garden/datasource/datasource.dart';
-import 'package:succucare_app/features/garden/models/models.dart';
-import 'package:succucare_app/features/garden/providers/providers.dart';
-import 'package:succucare_app/features/garden/repositories/repositories.dart';
+import 'package:succucare_app/features/garden/data/datasource/datasource.dart';
+import 'package:succucare_app/features/garden/data/models/models.dart';
+import 'package:succucare_app/features/garden/ui/providers/providers.dart';
+import 'package:succucare_app/features/garden/data/repositories/repositories.dart';
 
 class RecordingByIdGardenRepository implements GardenRepository {
   RecordingByIdGardenRepository({this.plant, this.error});

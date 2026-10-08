@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:succucare_app/features/garden/models/models.dart';
+import 'package:succucare_app/features/garden/data/models/models.dart';
 
-import 'package:succucare_app/features/garden/providers/plant_identification_service_provider.dart';
-import 'package:succucare_app/features/garden/services/plant_identification_service.dart';
-import 'package:succucare_app/features/garden/services/unavailable_plant_identification_service.dart';
+import 'package:succucare_app/features/garden/ui/providers/plant_identification_service_provider.dart';
+import 'package:succucare_app/features/garden/data/services/plant_identification_service.dart';
+import 'package:succucare_app/features/garden/data/services/unavailable_plant_identification_service.dart';
 
 const String _firebaseBackendFile =
     'lib/features/garden/services/firebase_ai_plant_identification_service.dart';

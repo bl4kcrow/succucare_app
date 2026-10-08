@@ -7,14 +7,14 @@ import 'package:succucare_app/core/errors/errors.dart';
 import 'package:succucare_app/core/routes/app_router.dart';
 import 'package:succucare_app/core/routes/routes.dart';
 import 'package:succucare_app/core/theme/app_theme.dart';
-import 'package:succucare_app/features/auth/models/models.dart';
-import 'package:succucare_app/features/auth/providers/providers.dart';
-import 'package:succucare_app/features/auth/repositories/repositories.dart';
-import 'package:succucare_app/features/garden/datasource/datasource.dart';
-import 'package:succucare_app/features/garden/models/models.dart';
-import 'package:succucare_app/features/garden/providers/providers.dart';
-import 'package:succucare_app/features/garden/repositories/repositories.dart';
-import 'package:succucare_app/features/garden/widgets/widgets.dart';
+import 'package:succucare_app/features/auth/data/models/models.dart';
+import 'package:succucare_app/features/auth/ui/providers/providers.dart';
+import 'package:succucare_app/features/auth/data/repositories/repositories.dart';
+import 'package:succucare_app/features/garden/data/datasource/datasource.dart';
+import 'package:succucare_app/features/garden/data/models/models.dart';
+import 'package:succucare_app/features/garden/ui/providers/providers.dart';
+import 'package:succucare_app/features/garden/data/repositories/repositories.dart';
+import 'package:succucare_app/features/garden/ui/widgets/widgets.dart';
 
 class FakeAuthRepository implements AuthRepository {
   FakeAuthRepository({required this.authenticated});
