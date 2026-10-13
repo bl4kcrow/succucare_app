@@ -1,0 +1,419 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Succulent AI - My Garden</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Manrope:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#8e9ebd",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#dce2f9",
+                        "on-primary-container": "#151b2c",
+                        "primary-fixed": "#dce2f9",
+                        "on-primary-fixed": "#151b2c",
+                        "primary-fixed-dim": "#bec6dc",
+                        "on-primary-fixed-variant": "#435069",
+                        "inverse-primary": "#bec6dc",
+
+                        "secondary": "#80716d",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#f1dfdb",
+                        "on-secondary-container": "#322b28",
+                        "secondary-fixed": "#f1dfdb",
+                        "on-secondary-fixed": "#322b28",
+                        "secondary-fixed-dim": "#d5c3bf",
+                        "on-secondary-fixed-variant": "#675955",
+
+                        "tertiary": "#a74d77",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#ffd9e4",
+                        "on-tertiary-container": "#3e0024",
+                        "tertiary-fixed": "#ffd9e4",
+                        "on-tertiary-fixed": "#3e0024",
+                        "tertiary-fixed-dim": "#ffb0ca",
+                        "on-tertiary-fixed-variant": "#89345e",
+
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#410002",
+
+                        "background": "#fbf8f8",
+                        "on-background": "#1c1b1b",
+                        "surface": "#fbf8f8",
+                        "on-surface": "#1c1b1b",
+                        "surface-variant": "#e3e2e6",
+                        "on-surface-variant": "#46464a",
+                        "outline": "#76767a",
+                        "outline-variant": "#c7c6ca",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f5f3f3",
+                        "surface-container": "#efeded",
+                        "surface-container-high": "#e9e7e8",
+                        "surface-container-highest": "#e3e2e2",
+                        "inverse-surface": "#313030",
+                        "inverse-on-surface": "#f3f0f0",
+                        "surface-tint": "#8e9ebd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap-lg": "24px",
+                        "card-padding": "16px",
+                        "stack-gap-md": "16px",
+                        "unit": "4px",
+                        "container-margin": "20px",
+                        "stack-gap-sm": "8px",
+                        "section-padding": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Manrope"],
+                        "label-sm": ["Manrope"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-lg": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "headline-xl-mobile": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+                        "label-sm-mobile": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-xl-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 20px rgba(26, 67, 44, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<meta content="mobile_tab" name="shell-type"></head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen pb-[100px] md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md text-primary dark:text-primary-fixed flex justify-between items-center w-full px-container-margin py-unit h-16 fixed top-0 left-0 right-0 z-40">
+<button aria-label="Back" class="text-on-surface-variant dark:text-outline hover:bg-secondary-container/50 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-lg text-headline-lg font-bold">SuccuCare</h1>
+<button aria-label="Search" class="text-on-surface-variant dark:text-outline hover:bg-secondary-container/50 transition-colors p-2 rounded-full">
+
+</button>
+</header>
+<!-- Main Content -->
+<main class="pt-24 px-container-margin md:max-w-7xl md:mx-auto"><div class="flex flex-col w-full pb-10 space-y-5">
+<!-- Header / Controls Overview -->
+<div class="flex items-end justify-between px-1">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Alertas y Cuidados</h2>
+<span class="bg-tertiary text-on-tertiary font-label-sm text-label-sm px-2.5 py-0.5 rounded-full shadow-sm" id="unread-counter-badge">2 nuevas</span>
+</div>
+<p class="font-body-md text-body-md text-rocket-metallic mt-0.5">Monitoreo biométrico y alertas de riego</p>
+</div>
+<button class="flex items-center gap-1.5 text-primary hover:text-on-primary-container font-label-lg text-label-lg transition-colors p-1 rounded-lg" id="mark-all-btn">
+<span class="material-symbols-outlined text-[18px]">done_all</span>
+<span class="hidden sm:inline">Marcar todas</span>
+</button>
+</div>
+<!-- Filter Chips (Horizontally Scrollable) -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1.5 -mx-1 px-1 no-scrollbar"><button class="filter-chip active flex-shrink-0 px-4 py-2 rounded-full font-label-lg text-label-lg transition-all duration-200 bg-primary text-on-primary shadow-sm" data-filter="all">Todas <span class="ml-1 opacity-80">(2)</span></button>
+<button class="filter-chip flex-shrink-0 px-4 py-2 rounded-full font-label-lg text-label-lg transition-all duration-200 bg-surface-container text-on-surface hover:bg-surface-container-high" data-filter="unread">Sin leer <span class="ml-1 text-tertiary font-bold">(2)</span></button></div>
+<!-- Notification Cards Stack -->
+<div class="flex flex-col space-y-3.5" id="notifications-list"><div class="notification-item unread relative flex flex-col p-card-padding rounded-xl bg-surface-container shadow-sm hover:shadow-md transition-all duration-300" data-category="riego">
+<div class="flex items-start gap-3">
+<div class="relative flex-shrink-0">
+<img class="w-14 h-14 rounded-xl object-cover shadow-inner" data-alt="Close up photograph of a pale blue Echeveria elegans succulent resting in a minimalist pot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaQgjt2LB9acZkuZzPcftzUjy4ailcL_9-eQLGrtO4rzutHIy4Ry3DIx90YQaDFlf08EyS3TDNHhAH2ouqKp07_rYSJGtEMlo3bENt6zz_D7BS67pdCnUbjIlGar1ILkwT7I8BpEfDUcbXraTszzjLLVUQDTpQUQMDcBmkVz7M6nozAvfg2XlXj-lNX--V3yAOtgA3Xj5OGAsOfO3B9wP5pqR3GebHNXDQ4-2TJq7NhmqH0OTb1kfH">
+<div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-tertiary text-on-tertiary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[14px]">water_drop</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 min-w-0">
+<span class="unread-dot w-2 h-2 rounded-full bg-mystic-maroon flex-shrink-0"></span>
+<h3 class="font-headline-md text-headline-md text-on-surface truncate">¡Luna necesita riego urgente!</h3>
+</div>
+<span class="font-label-sm text-label-sm text-rocket-metallic flex-shrink-0">Hace 25 min</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5 line-clamp-2">
+<span class="font-medium text-on-surface">Echeveria elegans</span> • Humedad en 15% detectada por sensor IoT.
+</p>
+<div class="mt-2.5 flex items-center gap-2">
+<div class="w-24 h-1.5 rounded-full bg-outline-variant/30 overflow-hidden">
+<div class="h-full bg-mystic-maroon rounded-full" style="width: 15%"></div>
+</div>
+<span class="font-label-sm text-label-sm text-mystic-maroon font-semibold">15% crítico</span>
+</div>
+</div>
+</div>
+<div class="mt-3.5 pt-3 flex items-center justify-between gap-2 border-t border-silver-metallic/20">
+<button class="register-action flex items-center gap-1.5 bg-primary text-on-primary font-label-lg text-label-lg px-3.5 py-1.5 rounded-lg shadow-sm hover:bg-cool-grey transition-all active:scale-95">
+<span class="material-symbols-outlined text-[16px]">water_drop</span>
+<span class="">Registrar Riego</span>
+</button>
+<div class="flex items-center gap-1">
+<button class="action-read p-2 rounded-full text-rocket-metallic hover:text-primary hover:bg-surface-container-high transition-colors" title="Marcar como leída">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+<button class="action-dismiss p-2 rounded-full text-rocket-metallic hover:text-error hover:bg-error-container/40 transition-colors" title="Descartar">
+<span class="material-symbols-outlined text-[20px]">delete_sweep</span>
+</button>
+</div>
+</div>
+</div>
+
+<div class="notification-item unread relative flex flex-col p-card-padding rounded-xl bg-surface-container shadow-sm hover:shadow-md transition-all duration-300" data-category="riego">
+<div class="flex items-start gap-3">
+<div class="relative flex-shrink-0">
+<img class="w-14 h-14 rounded-xl object-cover shadow-inner" data-alt="Haworthia fasciata Zebra succulent" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCK3rAXM2O5qab-BKEo9nKILOsHZtLm0wp_aSiYmCx3suCMxE6798Yo-0f8rRcJ6dW2mVjnQ7XoLBHMivy5eo1A6wzZ7Se-pch6ht-1ME-JXi7SckOX3CB4T5q-8zP2gPeci9A60wbbGgecwxUEnsT8upgua_M8RAjWu2hOJkgY45op0Bc9BcPQrOqBhmoeeWvTqrSk0kEU0zVsUlGhepjbpki833Xc4SHrBpN6pBvFmT716fx24Ggd">
+<div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-tertiary text-on-tertiary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[14px]">water_drop</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 min-w-0">
+<span class="unread-dot w-2 h-2 rounded-full bg-mystic-maroon flex-shrink-0"></span>
+<h3 class="font-headline-md text-headline-md text-on-surface truncate">Zebra • Riego requerido</h3>
+</div>
+<span class="font-label-sm text-label-sm text-rocket-metallic flex-shrink-0">Hace 2h</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5 line-clamp-2">
+<span class="font-medium text-on-surface">Haworthia fasciata</span> • Nivel de humedad bajo (20%). Sustrato seco detectado.
+</p>
+<div class="mt-2.5 flex items-center gap-2">
+<div class="w-24 h-1.5 rounded-full bg-outline-variant/30 overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 20%"></div>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary font-semibold">20% nivel bajo</span>
+</div>
+</div>
+</div>
+<div class="mt-3.5 pt-3 flex items-center justify-between gap-2 border-t border-silver-metallic/20">
+<button class="register-action flex items-center gap-1.5 bg-primary text-on-primary font-label-lg text-label-lg px-3.5 py-1.5 rounded-lg shadow-sm hover:bg-cool-grey transition-all active:scale-95">
+<span class="material-symbols-outlined text-[16px]">water_drop</span>
+<span class="">Registrar Riego</span>
+</button>
+<div class="flex items-center gap-1">
+<button class="action-read p-2 rounded-full text-rocket-metallic hover:text-primary hover:bg-surface-container-high transition-colors" title="Marcar como leída">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+<button class="action-dismiss p-2 rounded-full text-rocket-metallic hover:text-error hover:bg-error-container/40 transition-colors" title="Descartar">
+<span class="material-symbols-outlined text-[20px]">delete_sweep</span>
+</button>
+</div>
+</div>
+</div></div>
+<!-- Empty State Fallback (Hidden by default) -->
+<div class="hidden flex-col items-center justify-center text-center p-8 bg-surface-container-low rounded-2xl" id="empty-state">
+<div class="w-16 h-16 rounded-full bg-secondary-container flex items-center justify-center text-secondary mb-3 shadow-sm">
+<span class="material-symbols-outlined text-[32px]">sentiment_satisfied</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">¡Todo en orden!</h3>
+<p class="font-body-md text-body-md text-rocket-metallic max-w-xs mt-1">
+      Tus suculentas están felices, hidratadas y con luz perfecta. Te avisaremos cuando requieran atención.
+    </p>
+</div>
+<!-- Bottom Cleanup Action Bar -->
+<div class="flex items-center justify-between px-2 pt-2">
+<span class="font-label-sm text-label-sm text-rocket-metallic flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">sensors</span> Sensores sincronizados
+    </span>
+<button class="flex items-center gap-1.5 text-secondary hover:text-on-surface font-label-sm text-label-sm px-3 py-1.5 rounded-lg bg-surface-container-high transition-colors active:scale-95" id="clear-read-btn">
+<span class="material-symbols-outlined text-[16px]">clear_all</span>
+<span class="">Limpiar leídas</span>
+</button>
+</div>
+</div>
+<script>
+  (function() {
+    const list = document.getElementById('notifications-list');
+    const badge = document.getElementById('unread-counter-badge');
+    const emptyState = document.getElementById('empty-state');
+    const markAllBtn = document.getElementById('mark-all-btn');
+    const clearReadBtn = document.getElementById('clear-read-btn');
+    const chips = document.querySelectorAll('.filter-chip');
+
+    function updateUnreadCount() {
+      const unreadItems = list.querySelectorAll('.notification-item.unread:not(.hidden)');
+      const totalUnread = list.querySelectorAll('.notification-item.unread').length;
+      
+      if (totalUnread > 0) {
+        badge.textContent = `${totalUnread} nuevas`;
+        badge.classList.remove('hidden');
+      } else {
+        badge.textContent = 'Al día';
+        badge.classList.remove('bg-tertiary', 'text-on-tertiary');
+        badge.classList.add('bg-cool-grey', 'text-on-primary');
+      }
+
+      const visibleItems = Array.from(list.children).filter(el => !el.classList.contains('hidden'));
+      if (visibleItems.length === 0) {
+        emptyState.classList.remove('hidden');
+        emptyState.classList.add('flex');
+      } else {
+        emptyState.classList.add('hidden');
+        emptyState.classList.remove('flex');
+      }
+    }
+
+    // Filter Chips
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => {
+          c.classList.remove('bg-primary', 'text-on-primary');
+          c.classList.add('bg-surface-container', 'text-on-surface');
+        });
+        chip.classList.add('bg-primary', 'text-on-primary');
+        chip.classList.remove('bg-surface-container', 'text-on-surface');
+
+        const filter = chip.getAttribute('data-filter');
+        const items = list.querySelectorAll('.notification-item');
+
+        items.forEach(item => {
+          const category = item.getAttribute('data-category');
+          const isUnread = item.classList.contains('unread');
+
+          if (filter === 'all') {
+            item.classList.remove('hidden');
+          } else if (filter === 'unread') {
+            item.classList.toggle('hidden', !isUnread);
+          } else {
+            item.classList.toggle('hidden', category !== filter);
+          }
+        });
+        updateUnreadCount();
+      });
+    });
+
+    // Mark Individual as Read
+    list.addEventListener('click', (e) => {
+      const readBtn = e.target.closest('.action-read');
+      const dismissBtn = e.target.closest('.action-dismiss');
+      const registerBtn = e.target.closest('.register-action');
+
+      if (readBtn) {
+        const item = readBtn.closest('.notification-item');
+        item.classList.remove('unread');
+        item.classList.add('read', 'opacity-75', 'bg-surface-container-low');
+        item.classList.remove('bg-surface-container');
+        const dot = item.querySelector('.unread-dot');
+        if (dot) dot.remove();
+        readBtn.remove();
+        updateUnreadCount();
+      }
+
+      if (dismissBtn) {
+        const item = dismissBtn.closest('.notification-item');
+        item.style.transform = 'translateX(60px)';
+        item.style.opacity = '0';
+        setTimeout(() => {
+          item.remove();
+          updateUnreadCount();
+        }, 220);
+      }
+
+      if (registerBtn) {
+        registerBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">check</span> Registrado';
+        registerBtn.classList.replace('bg-primary', 'bg-secondary');
+        const item = registerBtn.closest('.notification-item');
+        setTimeout(() => {
+          const checkBtn = item.querySelector('.action-read');
+          if (checkBtn) checkBtn.click();
+        }, 600);
+      }
+    });
+
+    // Mark All as Read
+    markAllBtn.addEventListener('click', () => {
+      const unreads = list.querySelectorAll('.notification-item.unread');
+      unreads.forEach(item => {
+        item.classList.remove('unread');
+        item.classList.add('read', 'opacity-75', 'bg-surface-container-low');
+        item.classList.remove('bg-surface-container');
+        const dot = item.querySelector('.unread-dot');
+        if (dot) dot.remove();
+        const actionBtn = item.querySelector('.action-read');
+        if (actionBtn) actionBtn.remove();
+      });
+      updateUnreadCount();
+    });
+
+    // Clear Read Notifications
+    clearReadBtn.addEventListener('click', () => {
+      const readItems = list.querySelectorAll('.notification-item.read');
+      readItems.forEach(item => {
+        item.style.transform = 'scale(0.95)';
+        item.style.opacity = '0';
+        setTimeout(() => {
+          item.remove();
+          updateUnreadCount();
+        }, 200);
+      });
+    });
+
+    updateUnreadCount();
+  })();
+</script></main>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed bottom-24 md:bottom-8 right-6 w-14 h-14 bg-primary text-on-primary rounded-[16px] shadow-lg flex justify-center items-center hover:bg-surface-tint hover:scale-105 transition-all duration-200 z-50">
+<span class="material-symbols-outlined text-[28px]" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="md:hidden bg-surface-container-low dark:bg-surface-container-lowest shadow-[0_-4px_20px_rgba(26,67,44,0.05)] docked full-width bottom-0 rounded-t-xl fixed left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3">
+<!-- Active: Garden -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-primary-fixed rounded-full px-5 py-1.5 hover:text-primary dark:hover:text-primary-fixed scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="potted_plant" data-weight="fill" style="font-variation-settings: 'FILL' 1;">potted_plant</span>
+<span class="font-label-sm-mobile text-label-sm-mobile">Garden</span>
+</a>
+<!-- Inactive: Scan -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1.5 hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="center_focus_strong">center_focus_strong</span>
+<span class="font-label-sm-mobile text-label-sm-mobile">Scan</span>
+</a>
+<!-- Inactive: Care -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1.5 hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="spa">spa</span>
+<span class="font-label-sm-mobile text-label-sm-mobile">Care</span>
+</a>
+<!-- Inactive: Alerts -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1.5 hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="notifications">notifications</span>
+<span class="font-label-sm-mobile text-label-sm-mobile">Alerts</span>
+</a>
+</nav>
+
+
+
+
+</body></html>

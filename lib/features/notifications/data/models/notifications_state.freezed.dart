@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$NotificationsState {
 
- NotificationStatus get status; List<AppNotification> get notifications;
+ NotificationsStatus get status; List<AppNotification> get notifications; AlertsFilter get filter; Set<String> get readMessageIds;
 /// Create a copy of NotificationsState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $NotificationsStateCopyWith<NotificationsState> get copyWith => _$NotificationsS
 @override
 bool operator ==(Object other) {
   final _this = this as NotificationsState;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationsState&&(identical(other.status, _this.status) || other.status == _this.status)&&const DeepCollectionEquality().equals(other.notifications, _this.notifications));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationsState&&(identical(other.status, _this.status) || other.status == _this.status)&&const DeepCollectionEquality().equals(other.notifications, _this.notifications)&&(identical(other.filter, _this.filter) || other.filter == _this.filter)&&const DeepCollectionEquality().equals(other.readMessageIds, _this.readMessageIds));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as NotificationsState;
-  return Object.hash(runtimeType,_this.status,const DeepCollectionEquality().hash(_this.notifications));
+  return Object.hash(runtimeType,_this.status,const DeepCollectionEquality().hash(_this.notifications),_this.filter,const DeepCollectionEquality().hash(_this.readMessageIds));
 }
 
 @override
 String toString() {
   final _this = this as NotificationsState;
-  return 'NotificationsState(status: ${_this.status}, notifications: ${_this.notifications})';
+  return 'NotificationsState(status: ${_this.status}, notifications: ${_this.notifications}, filter: ${_this.filter}, readMessageIds: ${_this.readMessageIds})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $NotificationsStateCopyWith<$Res>  {
   factory $NotificationsStateCopyWith(NotificationsState value, $Res Function(NotificationsState) _then) = _$NotificationsStateCopyWithImpl;
 @useResult
 $Res call({
- NotificationStatus status, List<AppNotification> notifications
+ NotificationsStatus status, List<AppNotification> notifications, AlertsFilter filter, Set<String> readMessageIds
 });
 
 
@@ -71,11 +71,13 @@ class _$NotificationsStateCopyWithImpl<$Res>
 
 /// Create a copy of NotificationsState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? notifications = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? notifications = null,Object? filter = null,Object? readMessageIds = null,}) {
   return _then(NotificationsState(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as NotificationStatus,notifications: null == notifications ? _self.notifications : notifications // ignore: cast_nullable_to_non_nullable
-as List<AppNotification>,
+as NotificationsStatus,notifications: null == notifications ? _self.notifications : notifications // ignore: cast_nullable_to_non_nullable
+as List<AppNotification>,filter: null == filter ? _self.filter : filter // ignore: cast_nullable_to_non_nullable
+as AlertsFilter,readMessageIds: null == readMessageIds ? _self.readMessageIds : readMessageIds // ignore: cast_nullable_to_non_nullable
+as Set<String>,
   ));
 }
 
@@ -160,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( NotificationStatus status,  List<AppNotification> notifications)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( NotificationsStatus status,  List<AppNotification> notifications,  AlertsFilter filter,  Set<String> readMessageIds)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _NotificationsState() when $default != null:
-return $default(_that.status,_that.notifications);case _:
+return $default(_that.status,_that.notifications,_that.filter,_that.readMessageIds);case _:
   return orElse();
 
 }
@@ -181,10 +183,10 @@ return $default(_that.status,_that.notifications);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( NotificationStatus status,  List<AppNotification> notifications)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( NotificationsStatus status,  List<AppNotification> notifications,  AlertsFilter filter,  Set<String> readMessageIds)  $default,) {final _that = this;
 switch (_that) {
 case _NotificationsState():
-return $default(_that.status,_that.notifications);case _:
+return $default(_that.status,_that.notifications,_that.filter,_that.readMessageIds);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +203,10 @@ return $default(_that.status,_that.notifications);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( NotificationStatus status,  List<AppNotification> notifications)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( NotificationsStatus status,  List<AppNotification> notifications,  AlertsFilter filter,  Set<String> readMessageIds)?  $default,) {final _that = this;
 switch (_that) {
 case _NotificationsState() when $default != null:
-return $default(_that.status,_that.notifications);case _:
+return $default(_that.status,_that.notifications,_that.filter,_that.readMessageIds);case _:
   return null;
 
 }
@@ -215,16 +217,24 @@ return $default(_that.status,_that.notifications);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _NotificationsState implements NotificationsState {
-  const _NotificationsState({required this.status, required  List<AppNotification> notifications}): _notifications = notifications;
+class _NotificationsState extends NotificationsState {
+  const _NotificationsState({required this.status, required  List<AppNotification> notifications, this.filter = AlertsFilter.all,  Set<String> readMessageIds = const <String>{}}): _notifications = notifications,_readMessageIds = readMessageIds,super._();
   factory _NotificationsState.fromJson(Map<String, dynamic> json) => _$NotificationsStateFromJson(json);
 
-@override final  NotificationStatus status;
+@override final  NotificationsStatus status;
  final  List<AppNotification> _notifications;
 @override List<AppNotification> get notifications {
   if (_notifications is EqualUnmodifiableListView) return _notifications;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_notifications);
+}
+
+@override@JsonKey() final  AlertsFilter filter;
+ final  Set<String> _readMessageIds;
+@override@JsonKey() Set<String> get readMessageIds {
+  if (_readMessageIds is EqualUnmodifiableSetView) return _readMessageIds;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableSetView(_readMessageIds);
 }
 
 
@@ -241,18 +251,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationsState&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other.notifications, _notifications));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationsState&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other.notifications, _notifications)&&(identical(other.filter, filter) || other.filter == filter)&&const DeepCollectionEquality().equals(other.readMessageIds, _readMessageIds));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,status,const DeepCollectionEquality().hash(_notifications));
+    return Object.hash(runtimeType,status,const DeepCollectionEquality().hash(_notifications),filter,const DeepCollectionEquality().hash(_readMessageIds));
 }
 
 @override
 String toString() {
-    return 'NotificationsState(status: $status, notifications: $notifications)';
+    return 'NotificationsState(status: $status, notifications: $notifications, filter: $filter, readMessageIds: $readMessageIds)';
 }
 
 
@@ -263,7 +273,7 @@ abstract mixin class _$NotificationsStateCopyWith<$Res> implements $Notification
   factory _$NotificationsStateCopyWith(_NotificationsState value, $Res Function(_NotificationsState) _then) = __$NotificationsStateCopyWithImpl;
 @override @useResult
 $Res call({
- NotificationStatus status, List<AppNotification> notifications
+ NotificationsStatus status, List<AppNotification> notifications, AlertsFilter filter, Set<String> readMessageIds
 });
 
 
@@ -280,11 +290,13 @@ class __$NotificationsStateCopyWithImpl<$Res>
 
 /// Create a copy of NotificationsState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? notifications = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? notifications = null,Object? filter = null,Object? readMessageIds = null,}) {
   return _then(_NotificationsState(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as NotificationStatus,notifications: null == notifications ? _self._notifications : notifications // ignore: cast_nullable_to_non_nullable
-as List<AppNotification>,
+as NotificationsStatus,notifications: null == notifications ? _self._notifications : notifications // ignore: cast_nullable_to_non_nullable
+as List<AppNotification>,filter: null == filter ? _self.filter : filter // ignore: cast_nullable_to_non_nullable
+as AlertsFilter,readMessageIds: null == readMessageIds ? _self._readMessageIds : readMessageIds // ignore: cast_nullable_to_non_nullable
+as Set<String>,
   ));
 }
 

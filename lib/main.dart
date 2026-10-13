@@ -1,14 +1,14 @@
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'core/routes/app_router.dart';
-import 'core/theme/app_theme.dart';
-import 'firebase_options_dev.dart';
+import 'package:succucare_app/core/routes/app_router.dart';
+import 'package:succucare_app/core/theme/app_theme.dart';
+import 'package:succucare_app/firebase_options_dev.dart';
+import 'package:succucare_app/features/notifications/ui/providers/providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,14 +33,6 @@ void main() async {
     ),
   );
 
-  final NotificationSettings notificationSettings = await FirebaseMessaging
-      .instance
-      .requestPermission(provisional: true);
-
-  final String? FirebaseMessagingToken = await FirebaseMessaging.instance
-      .getToken();
-  debugPrint('FirebaseMessagingToken: $FirebaseMessagingToken');
-
   runApp(ProviderScope(child: const MainApp()));
 }
 
@@ -50,6 +42,7 @@ class MainApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(appRouterProvider);
+    ref.watch(alertsProvider.notifier).configureMessageHandlers();
 
     return MaterialApp.router(
       title: 'SuccuCare App',
