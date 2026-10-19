@@ -2,10 +2,11 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import 'package:succucare_app/features/garden/screens/screens.dart';
-import 'package:succucare_app/features/auth/providers/providers.dart';
-import 'package:succucare_app/features/auth/screens/screens.dart';
-import 'package:succucare_app/features/garden/views/views.dart';
+import 'package:succucare_app/features/garden/ui/screens/screens.dart';
+import 'package:succucare_app/features/auth/ui/providers/providers.dart';
+import 'package:succucare_app/features/auth/ui/screens/screens.dart';
+import 'package:succucare_app/features/garden/ui/views/views.dart';
+import 'package:succucare_app/features/notifications/ui/views/views.dart';
 import 'routes.dart';
 
 part 'app_router.g.dart';

@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:succucare_app/core/errors/errors.dart';
-import 'package:succucare_app/features/garden/models/models.dart';
-import 'package:succucare_app/features/garden/services/firebase_ai_plant_identification_service.dart';
+import 'package:succucare_app/features/garden/data/models/models.dart';
+import 'package:succucare_app/features/garden/data/services/firebase_ai_plant_identification_service.dart';
 
 /// A canned model handle, so the real service's request building, response
 /// reading and mapping are exercised without a network.

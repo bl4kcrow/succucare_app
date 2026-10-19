@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'core/routes/app_router.dart';
-import 'core/theme/app_theme.dart';
-import 'firebase_options_dev.dart';
+import 'package:succucare_app/core/routes/app_router.dart';
+import 'package:succucare_app/core/theme/app_theme.dart';
+import 'package:succucare_app/firebase_options_dev.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

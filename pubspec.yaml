@@ -13,6 +13,7 @@ dependencies:
   firebase_app_check: ^0.4.7
   firebase_auth: ^6.6.1
   firebase_core: ^4.14.0
+  firebase_messaging: ^16.7.0
   firebase_storage: ^13.5.0
   flutter:
     sdk: flutter
@@ -33,10 +34,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  riverpod_generator: ^4.0.8
-  build_runner: ^2.15.2
+  riverpod_generator: ^4.0.9
+  build_runner: ^2.16.2
   riverpod_lint: ^3.1.9
-  freezed: ^4.0.0
+  freezed: ^4.0.2
   json_serializable: ^6.14.1
 
 flutter:

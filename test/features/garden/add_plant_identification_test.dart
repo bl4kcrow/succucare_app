@@ -6,10 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:succucare_app/core/errors/errors.dart';
-import 'package:succucare_app/features/garden/models/models.dart';
-import 'package:succucare_app/features/garden/providers/providers.dart';
-import 'package:succucare_app/features/garden/repositories/repositories.dart';
-import 'package:succucare_app/features/garden/services/services.dart';
+import 'package:succucare_app/features/garden/data/models/models.dart';
+import 'package:succucare_app/features/garden/ui/providers/providers.dart';
+import 'package:succucare_app/features/garden/data/repositories/repositories.dart';
+import 'package:succucare_app/features/garden/data/services/services.dart';
 
 const String transparentPng =
     'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
