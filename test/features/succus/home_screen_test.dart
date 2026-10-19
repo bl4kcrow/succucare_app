@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:succucare_app/features/garden/views/views.dart';
+import 'package:succucare_app/features/garden/ui/views/views.dart';
 
 void main() {
   testWidgets('renders the garden home screen with mock plants', (

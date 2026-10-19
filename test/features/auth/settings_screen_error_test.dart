@@ -7,9 +7,9 @@ import 'package:go_router/go_router.dart';
 import 'package:succucare_app/core/routes/app_router.dart';
 import 'package:succucare_app/core/routes/routes.dart';
 import 'package:succucare_app/core/theme/app_theme.dart';
-import 'package:succucare_app/features/auth/models/models.dart';
-import 'package:succucare_app/features/auth/providers/providers.dart';
-import 'package:succucare_app/features/auth/repositories/repositories.dart';
+import 'package:succucare_app/features/auth/data/models/models.dart';
+import 'package:succucare_app/features/auth/ui/providers/providers.dart';
+import 'package:succucare_app/features/auth/data/repositories/repositories.dart';
 
 final AppUser signedInUser = AppUser(
   id: 'uid-1',

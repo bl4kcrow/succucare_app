@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:succucare_app/features/auth/models/models.dart';
-import 'package:succucare_app/features/auth/providers/providers.dart';
-import 'package:succucare_app/features/auth/repositories/repositories.dart';
+import 'package:succucare_app/features/auth/data/models/models.dart';
+import 'package:succucare_app/features/auth/ui/providers/providers.dart';
+import 'package:succucare_app/features/auth/data/repositories/repositories.dart';
 
 class FakeAuthRepository implements AuthRepository {
   FakeAuthRepository({this.resetError});

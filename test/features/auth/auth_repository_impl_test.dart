@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:succucare_app/features/auth/models/models.dart';
-import 'package:succucare_app/features/auth/providers/providers.dart';
-import 'package:succucare_app/features/auth/services/services.dart';
+import 'package:succucare_app/features/auth/data/models/models.dart';
+import 'package:succucare_app/features/auth/ui/providers/providers.dart';
+import 'package:succucare_app/features/auth/data/services/services.dart';
 
 class RecordingAuthService implements AuthService {
   final List<String> resetEmails = [];
