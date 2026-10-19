@@ -20,6 +20,29 @@ class NotificationsRepositoryImpl implements NotificationsRepository {
   final NotificationsService notificationsService;
 
   @override
+  Future<Result<NotificationsStatus>> initNotifications() async {
+    try {
+      return Success(await notificationsService.initNotifications());
+    } catch (error) {
+      return Failure(UnknownError(error.toString()));
+    }
+  }
+
+  @override
+  Future<Result<String>> getToken() async {
+    try {
+      return Success(await notificationsService.getToken());
+    } catch (error) {
+      return Failure(UnknownError(error.toString()));
+    }
+  }
+
+  @override
+  Future<void> saveToken(String token) async {
+    await notificationsService.saveToken(token);
+  }
+
+  @override
   Stream<Result<AppNotification>> onBackground() {
     StreamController<Result<AppNotification>> controller =
         StreamController<Result<AppNotification>>();
@@ -49,14 +72,5 @@ class NotificationsRepositoryImpl implements NotificationsRepository {
     }
 
     return controller.stream;
-  }
-
-  @override
-  Future<Result<NotificationsStatus>> initNotifications() async {
-    try {
-      return Success(await notificationsService.initNotifications());
-    } catch (error) {
-      return Failure(UnknownError(error.toString()));
-    }
   }
 }

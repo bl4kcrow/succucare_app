@@ -31,6 +31,7 @@ NotificationsState _state({
 }) {
   return NotificationsState(
     status: NotificationsStatus.authorized,
+    token: 'faketoken0ujik',
     notifications: notifications ?? [_notification('a'), _notification('b')],
     readMessageIds: readMessageIds,
   );

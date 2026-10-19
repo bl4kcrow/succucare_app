@@ -8,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:succucare_app/core/routes/app_router.dart';
 import 'package:succucare_app/core/theme/app_theme.dart';
 import 'package:succucare_app/firebase_options_dev.dart';
-import 'package:succucare_app/features/notifications/ui/providers/providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +41,6 @@ class MainApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(appRouterProvider);
-    ref.watch(alertsProvider.notifier).configureMessageHandlers();
 
     return MaterialApp.router(
       title: 'SuccuCare App',

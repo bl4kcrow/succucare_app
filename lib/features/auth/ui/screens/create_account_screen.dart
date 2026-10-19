@@ -2,10 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/insets.dart';
-import '../../../../core/utils/svg_icon.dart';
-import '../../ui/providers/providers.dart';
+import 'package:succucare_app/core/theme/app_colors.dart';
+import 'package:succucare_app/core/theme/insets.dart';
+import 'package:succucare_app/core/utils/svg_icon.dart';
+import 'package:succucare_app/features/auth/ui/providers/providers.dart';
 
 class CreateAccountScreen extends ConsumerStatefulWidget {
   const CreateAccountScreen({super.key});

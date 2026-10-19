@@ -4,5 +4,3 @@ enum AuthenticationState {
   unauthenticated,
   unknown,
 }
-
-// final authenticationStateProvider = StateProvider((ref) => AuthenticationState.unknown);

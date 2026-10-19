@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import '../models/models.dart';
-import '../../ui/providers/providers.dart';
+import 'package:succucare_app/features/auth/data/models/models.dart';
+import 'package:succucare_app/features/auth/ui/providers/providers.dart';
 
 abstract class AuthService {
   AppUser currentUser();

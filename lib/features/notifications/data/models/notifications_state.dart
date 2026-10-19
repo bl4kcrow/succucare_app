@@ -28,6 +28,7 @@ abstract class NotificationsState with _$NotificationsState {
 
   const factory NotificationsState({
     required NotificationsStatus status,
+    required String token,
     required List<AppNotification> notifications,
     @Default(AlertsFilter.all) AlertsFilter filter,
     @Default(<String>{}) Set<String> readMessageIds,

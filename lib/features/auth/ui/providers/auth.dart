@@ -1,9 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../data/models/app_user.dart';
-import '../../data/models/authentication.dart';
-import 'auth_repository_impl.dart';
-import 'authentication_state.dart';
+import 'package:succucare_app/features/auth/data/models/models.dart';
+import 'package:succucare_app/features/auth/ui/providers/providers.dart';
 
 part 'auth.g.dart';
 

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import 'package:succucare_app/core/routes/routes.dart';
 import 'package:succucare_app/features/garden/ui/widgets/widgets.dart';
+import 'package:succucare_app/features/notifications/ui/providers/providers.dart';
 
 enum GardenDestination { garden, scan, alerts }
 
@@ -21,7 +23,7 @@ extension GardenDestinationLabel on GardenDestination {
   };
 }
 
-class MyGardenScreen extends StatelessWidget {
+class MyGardenScreen extends ConsumerWidget {
   const MyGardenScreen({super.key, required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
@@ -35,7 +37,8 @@ class MyGardenScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(alertsProvider.notifier).configureMessageHandlers();
     return Scaffold(
       appBar: GardenAppBar(
         onSettingsPressed: () => context.pushNamed(Routes.settings.name),

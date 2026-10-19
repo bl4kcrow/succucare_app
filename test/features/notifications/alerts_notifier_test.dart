@@ -23,6 +23,12 @@ class _FakeNotificationsRepository implements NotificationsRepository {
 
   @override
   Stream<Result<AppNotification>> onForeground() => const Stream.empty();
+
+  @override
+  Future<Result<String>> getToken() async => Success('faketoken0ujik');
+
+  @override
+  Future<void> saveToken(String token) => Completer().future;
 }
 
 /// A repository whose initialization never completes, keeping the notifier in
@@ -37,6 +43,12 @@ class _PendingNotificationsRepository implements NotificationsRepository {
 
   @override
   Stream<Result<AppNotification>> onForeground() => const Stream.empty();
+
+  @override
+  Future<Result<String>> getToken() => Completer<Result<String>>().future;
+
+  @override
+  Future<void> saveToken(String token) => Completer().future;
 }
 
 /// An [AlertsNotifier] whose initial inbox is supplied directly, so the action
@@ -73,6 +85,7 @@ NotificationsState _seededState({
 }) {
   return NotificationsState(
     status: NotificationsStatus.authorized,
+    token: 'faketoken0ujik',
     notifications: notifications ?? [_notification('a'), _notification('b')],
     filter: filter,
     readMessageIds: readMessageIds,
@@ -123,18 +136,20 @@ void main() {
   });
 
   group('AlertsNotifier actions', () {
-    test('markAsRead marks a single notification without touching the others',
-        () async {
-      final subject = await _containerWith(_seededState());
+    test(
+      'markAsRead marks a single notification without touching the others',
+      () async {
+        final subject = await _containerWith(_seededState());
 
-      subject.notifier.markAsRead('a');
+        subject.notifier.markAsRead('a');
 
-      final state = _stateOf(subject.container);
-      expect(state.readMessageIds, {'a'});
-      expect(state.isUnread('a'), isFalse);
-      expect(state.isUnread('b'), isTrue);
-      expect(state.unreadCount, 1);
-    });
+        final state = _stateOf(subject.container);
+        expect(state.readMessageIds, {'a'});
+        expect(state.isUnread('a'), isFalse);
+        expect(state.isUnread('b'), isTrue);
+        expect(state.unreadCount, 1);
+      },
+    );
 
     test('registerWatering marks the notification as read', () async {
       final subject = await _containerWith(_seededState());
@@ -157,9 +172,7 @@ void main() {
     });
 
     test('dismiss removes the notification and its read marker', () async {
-      final subject = await _containerWith(
-        _seededState(readMessageIds: {'a'}),
-      );
+      final subject = await _containerWith(_seededState(readMessageIds: {'a'}));
 
       subject.notifier.dismiss('a');
 
@@ -168,23 +181,24 @@ void main() {
       expect(state.readMessageIds, isEmpty);
     });
 
-    test('clearRead removes read notifications and keeps unread ones', () async {
-      final subject = await _containerWith(
-        _seededState(readMessageIds: {'a'}),
-      );
+    test(
+      'clearRead removes read notifications and keeps unread ones',
+      () async {
+        final subject = await _containerWith(
+          _seededState(readMessageIds: {'a'}),
+        );
 
-      subject.notifier.clearRead();
+        subject.notifier.clearRead();
 
-      final state = _stateOf(subject.container);
-      expect(state.notifications.map((n) => n.messageId), ['b']);
-      expect(state.readMessageIds, isEmpty);
-      expect(state.unreadCount, 1);
-    });
+        final state = _stateOf(subject.container);
+        expect(state.notifications.map((n) => n.messageId), ['b']);
+        expect(state.readMessageIds, isEmpty);
+        expect(state.unreadCount, 1);
+      },
+    );
 
     test('setFilter narrows visibleNotifications to unread items', () async {
-      final subject = await _containerWith(
-        _seededState(readMessageIds: {'a'}),
-      );
+      final subject = await _containerWith(_seededState(readMessageIds: {'a'}));
 
       subject.notifier.setFilter(AlertsFilter.unread);
 
@@ -194,7 +208,9 @@ void main() {
 
       subject.notifier.setFilter(AlertsFilter.all);
       expect(
-        _stateOf(subject.container).visibleNotifications.map((n) => n.messageId),
+        _stateOf(
+          subject.container,
+        ).visibleNotifications.map((n) => n.messageId),
         ['a', 'b'],
       );
     });

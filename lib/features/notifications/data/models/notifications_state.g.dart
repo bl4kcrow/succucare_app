@@ -9,6 +9,7 @@ part of 'notifications_state.dart';
 _NotificationsState _$NotificationsStateFromJson(Map<String, dynamic> json) =>
     _NotificationsState(
       status: $enumDecode(_$NotificationsStatusEnumMap, json['status']),
+      token: json['token'] as String,
       notifications: (json['notifications'] as List<dynamic>)
           .map((e) => AppNotification.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -25,6 +26,7 @@ _NotificationsState _$NotificationsStateFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$NotificationsStateToJson(_NotificationsState instance) =>
     <String, dynamic>{
       'status': _$NotificationsStatusEnumMap[instance.status]!,
+      'token': instance.token,
       'notifications': instance.notifications,
       'filter': _$AlertsFilterEnumMap[instance.filter]!,
       'readMessageIds': instance.readMessageIds.toList(),

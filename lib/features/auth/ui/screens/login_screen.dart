@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/errors/errors.dart';
-import '../../../../core/routes/routes.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/insets.dart';
-import '../../../../core/utils/utils.dart';
-import '../../ui/providers/providers.dart';
+import 'package:succucare_app/core/errors/errors.dart';
+import 'package:succucare_app/core/routes/routes.dart';
+import 'package:succucare_app/core/theme/app_colors.dart';
+import 'package:succucare_app/core/theme/insets.dart';
+import 'package:succucare_app/core/utils/utils.dart';
+import 'package:succucare_app/features/auth/ui/providers/providers.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});

@@ -12,6 +12,8 @@ class AlertsNotifier extends _$AlertsNotifier {
   @override
   Future<NotificationsState> build() async {
     NotificationsStatus initialStatus = NotificationsStatus.unknown;
+    String token = '';
+
     final notificationsRepository = ref.watch(notificationsRepositoryProvider);
     final notificationsStatus = await notificationsRepository
         .initNotifications();
@@ -23,7 +25,22 @@ class AlertsNotifier extends _$AlertsNotifier {
         initialStatus = NotificationsStatus.unknown;
     }
 
-    return NotificationsState(status: initialStatus, notifications: []);
+    if (initialStatus == NotificationsStatus.authorized) {
+      final getTokenResult = await notificationsRepository.getToken();
+
+      switch (getTokenResult) {
+        case Success<String>():
+          token = getTokenResult.data;
+        case Failure<String>():
+          token = '';
+      }
+    }
+
+    return NotificationsState(
+      status: initialStatus,
+      token: token,
+      notifications: [],
+    );
   }
 
   void configureMessageHandlers() {
@@ -79,9 +96,7 @@ class AlertsNotifier extends _$AlertsNotifier {
     if (current == null) return;
 
     state = AsyncData(
-      current.copyWith(
-        readMessageIds: {...current.readMessageIds, messageId},
-      ),
+      current.copyWith(readMessageIds: {...current.readMessageIds, messageId}),
     );
   }
 
@@ -94,7 +109,8 @@ class AlertsNotifier extends _$AlertsNotifier {
       current.copyWith(
         readMessageIds: {
           ...current.readMessageIds,
-          for (final notification in current.notifications) notification.messageId,
+          for (final notification in current.notifications)
+            notification.messageId,
         },
       ),
     );
@@ -130,7 +146,10 @@ class AlertsNotifier extends _$AlertsNotifier {
       current.copyWith(
         notifications: unread,
         readMessageIds: current.readMessageIds
-            .where((id) => unread.any((notification) => notification.messageId == id))
+            .where(
+              (id) =>
+                  unread.any((notification) => notification.messageId == id),
+            )
             .toSet(),
       ),
     );
